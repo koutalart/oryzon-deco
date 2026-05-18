@@ -1,0 +1,1863 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Oryzon Deco — Mobilier & décoration Japandi premium à Mayotte. Transformez votre intérieur avec nos collections minimalistes et naturelles.">
+<title>Oryzon Deco — Mobilier & Déco Japandi | Mayotte</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+/* ═══════════════════════════════════════════
+   DESIGN SYSTEM — ORYZON DECO
+   Palette : #171717 · #D4AF37 · #F8F5F0 · #FFFFFF
+   Fonts   : Cormorant (titres) · Montserrat (corps)
+═══════════════════════════════════════════ */
+:root {
+  --black:   #171717;
+  --dark:    #2C2C2C;
+  --gold:    #D4AF37;
+  --gold-lt: #E8C96A;
+  --beige:   #F8F5F0;
+  --sand:    #EDE8DF;
+  --white:   #FFFFFF;
+  --gray:    #9A9A9A;
+  --radius:  2px;
+  --trans:   0.35s cubic-bezier(.4,0,.2,1);
+}
+
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+html { scroll-behavior: smooth; font-size: 16px; }
+
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--white);
+  color: var(--black);
+  overflow-x: hidden;
+  -webkit-font-smoothing: antialiased;
+}
+
+img { display: block; max-width: 100%; }
+a  { text-decoration: none; color: inherit; }
+button { cursor: pointer; border: none; background: none; font-family: inherit; }
+ul { list-style: none; }
+
+/* ── TYPOGRAPHY ── */
+.serif { font-family: 'Cormorant', serif; }
+h1,h2,h3 { font-family: 'Cormorant', serif; font-weight: 500; line-height: 1.15; }
+h1 { font-size: clamp(2.8rem, 7vw, 5.5rem); }
+h2 { font-size: clamp(2rem, 4vw, 3.4rem); }
+h3 { font-size: clamp(1.3rem, 2.5vw, 1.8rem); }
+p  { font-size: 0.93rem; line-height: 1.75; color: var(--dark); letter-spacing: 0.01em; }
+
+/* ── BUTTONS ── */
+.btn {
+  display: inline-flex; align-items: center; justify-content: center;
+  gap: 0.5rem; padding: 0.9rem 2.2rem;
+  font-family: 'Montserrat', sans-serif; font-size: 0.75rem;
+  font-weight: 600; letter-spacing: 0.18em; text-transform: uppercase;
+  transition: var(--trans); cursor: pointer;
+}
+.btn-gold {
+  background: var(--gold); color: var(--black);
+  border: 1.5px solid var(--gold);
+}
+.btn-gold:hover { background: var(--gold-lt); border-color: var(--gold-lt); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(212,175,55,.3); }
+
+.btn-outline {
+  background: transparent; color: var(--white);
+  border: 1.5px solid rgba(255,255,255,.55);
+}
+.btn-outline:hover { background: rgba(255,255,255,.1); border-color: var(--white); }
+
+.btn-dark {
+  background: var(--black); color: var(--white);
+  border: 1.5px solid var(--black);
+}
+.btn-dark:hover { background: var(--dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.25); }
+
+/* ── LAYOUT ── */
+.container { width: 100%; max-width: 1280px; margin: 0 auto; padding: 0 1.5rem; }
+.section-pad { padding: 6rem 0; }
+
+/* ── REVEAL ANIMATION ── */
+.reveal {
+  opacity: 0; transform: translateY(32px);
+  transition: opacity 0.7s ease, transform 0.7s ease;
+}
+.reveal.visible { opacity: 1; transform: translateY(0); }
+.reveal-delay-1 { transition-delay: 0.1s; }
+.reveal-delay-2 { transition-delay: 0.2s; }
+.reveal-delay-3 { transition-delay: 0.3s; }
+.reveal-delay-4 { transition-delay: 0.4s; }
+
+/* ══════════════════════════════════════════
+   NAV
+══════════════════════════════════════════ */
+#navbar {
+  position: fixed; top: 0; left: 0; right: 0; z-index: 100;
+  padding: 1.4rem 0;
+  transition: background 0.4s ease, padding 0.4s ease, box-shadow 0.4s ease;
+}
+#navbar.scrolled {
+  background: rgba(255,255,255,.97);
+  backdrop-filter: blur(12px);
+  padding: 0.9rem 0;
+  box-shadow: 0 1px 0 rgba(0,0,0,.08);
+}
+.nav-inner {
+  display: flex; align-items: center; justify-content: space-between;
+}
+.nav-logo {
+  font-family: 'Cormorant', serif; font-size: 1.6rem; font-weight: 600;
+  letter-spacing: 0.06em; color: var(--white);
+  transition: color 0.4s;
+}
+#navbar.scrolled .nav-logo { color: var(--black); }
+
+.nav-links {
+  display: flex; gap: 2.4rem; align-items: center;
+}
+.nav-links a {
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.14em; text-transform: uppercase;
+  color: rgba(255,255,255,.85); transition: color 0.3s;
+  position: relative;
+}
+.nav-links a::after {
+  content: ''; position: absolute; bottom: -3px; left: 0; width: 0; height: 1px;
+  background: var(--gold); transition: width 0.3s;
+}
+.nav-links a:hover::after { width: 100%; }
+.nav-links a:hover { color: var(--white); }
+#navbar.scrolled .nav-links a { color: var(--dark); }
+#navbar.scrolled .nav-links a:hover { color: var(--black); }
+
+.nav-actions { display: flex; gap: 1rem; align-items: center; }
+.nav-icon-btn {
+  width: 38px; height: 38px; display: flex; align-items: center; justify-content: center;
+  border-radius: 50%; color: rgba(255,255,255,.85); transition: var(--trans); cursor: pointer;
+  position: relative;
+}
+#navbar.scrolled .nav-icon-btn { color: var(--dark); }
+.nav-icon-btn:hover { background: rgba(255,255,255,.15); color: var(--white); }
+#navbar.scrolled .nav-icon-btn:hover { background: var(--sand); color: var(--black); }
+.cart-count {
+  position: absolute; top: 2px; right: 2px;
+  width: 16px; height: 16px; background: var(--gold);
+  border-radius: 50%; font-size: 0.6rem; font-weight: 700;
+  color: var(--black); display: flex; align-items: center; justify-content: center;
+}
+.nav-cta {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  padding: 0.6rem 1.4rem; border: 1.5px solid rgba(255,255,255,.6); color: var(--white);
+  transition: var(--trans); border-radius: var(--radius);
+}
+#navbar.scrolled .nav-cta { border-color: var(--gold); color: var(--black); background: var(--gold); }
+.nav-cta:hover { background: var(--white); color: var(--black); }
+
+.hamburger { display: none; flex-direction: column; gap: 5px; cursor: pointer; padding: 4px; }
+.hamburger span {
+  display: block; width: 24px; height: 1.5px; background: var(--white);
+  transition: var(--trans);
+}
+#navbar.scrolled .hamburger span { background: var(--black); }
+
+/* Mobile nav */
+.mobile-menu {
+  display: none; position: fixed; inset: 0; z-index: 99;
+  background: var(--black); flex-direction: column;
+  align-items: center; justify-content: center; gap: 2.5rem;
+}
+.mobile-menu.open { display: flex; }
+.mobile-menu a {
+  font-family: 'Cormorant', serif; font-size: 2.2rem; font-weight: 400;
+  color: var(--white); letter-spacing: 0.05em;
+  transition: color 0.3s;
+}
+.mobile-menu a:hover { color: var(--gold); }
+.mobile-close {
+  position: absolute; top: 1.6rem; right: 1.6rem;
+  color: var(--white); cursor: pointer;
+}
+
+/* ══════════════════════════════════════════
+   HERO
+══════════════════════════════════════════ */
+#hero {
+  position: relative; min-height: 100svh;
+  display: flex; align-items: center;
+  overflow: hidden; background: var(--black);
+}
+.hero-bg {
+  position: absolute; inset: 0;
+  background: linear-gradient(135deg, #0d0d0d 0%, #1a1611 40%, #2a2318 100%);
+}
+/* Decorative grain overlay */
+.hero-bg::after {
+  content: '';
+  position: absolute; inset: 0;
+  background-image: url("data:image/svg+xml,%3Csvg viewBox='0 0 256 256' xmlns='http://www.w3.org/2000/svg'%3E%3Cfilter id='noise'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.9' numOctaves='4' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23noise)' opacity='0.04'/%3E%3C/svg%3E");
+  opacity: 0.4; pointer-events: none;
+}
+/* Floating blobs */
+.hero-blob {
+  position: absolute; border-radius: 50%; filter: blur(80px);
+  opacity: 0.18; pointer-events: none;
+  animation: blob-float 8s ease-in-out infinite;
+}
+.hero-blob-1 { width: 500px; height: 500px; background: var(--gold); top: -100px; right: -100px; animation-delay: 0s; }
+.hero-blob-2 { width: 350px; height: 350px; background: #8B6914; bottom: 0; left: -80px; animation-delay: 3s; }
+@keyframes blob-float {
+  0%,100% { transform: translateY(0) scale(1); }
+  50% { transform: translateY(-30px) scale(1.05); }
+}
+
+/* Decorative lines */
+.hero-line {
+  position: absolute; background: rgba(212,175,55,.15);
+  pointer-events: none;
+}
+.hero-line-v { width: 1px; height: 60%; top: 20%; }
+.hero-line-h { height: 1px; width: 60%; left: 20%; }
+.hero-line-1 { left: 10%; }
+.hero-line-2 { right: 10%; animation-delay: 0.2s; }
+.hero-line-3 { top: 15%; }
+.hero-line-4 { bottom: 20%; }
+
+.hero-content {
+  position: relative; z-index: 2;
+  width: 100%; padding: 8rem 0 5rem;
+}
+.hero-eyebrow {
+  display: inline-flex; align-items: center; gap: 0.75rem;
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.25em;
+  text-transform: uppercase; color: var(--gold);
+  margin-bottom: 1.5rem;
+  animation: fade-up 0.8s ease both 0.3s;
+}
+.hero-eyebrow::before {
+  content: ''; display: block; width: 32px; height: 1px; background: var(--gold);
+}
+.hero-title {
+  font-family: 'Cormorant', serif;
+  font-size: clamp(3rem, 8vw, 6.5rem);
+  font-weight: 400; line-height: 1.05;
+  color: var(--white); max-width: 780px;
+  animation: fade-up 0.9s ease both 0.5s;
+}
+.hero-title em {
+  font-style: italic; color: var(--gold);
+}
+.hero-subtitle {
+  margin-top: 1.5rem; max-width: 520px;
+  font-size: 0.9rem; font-weight: 300; line-height: 1.8;
+  color: rgba(255,255,255,.65);
+  animation: fade-up 0.9s ease both 0.7s;
+}
+.hero-ctas {
+  display: flex; flex-wrap: wrap; gap: 1rem;
+  margin-top: 2.5rem;
+  animation: fade-up 0.9s ease both 0.9s;
+}
+.hero-stats {
+  display: flex; gap: 2.5rem; margin-top: 4rem;
+  padding-top: 2.5rem; border-top: 1px solid rgba(255,255,255,.1);
+  animation: fade-up 0.9s ease both 1.1s;
+}
+.hero-stat-num {
+  font-family: 'Cormorant', serif;
+  font-size: 2.2rem; font-weight: 500; color: var(--white);
+  line-height: 1;
+}
+.hero-stat-label {
+  font-size: 0.67rem; font-weight: 500; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gray);
+  margin-top: 0.3rem;
+}
+.hero-scroll {
+  position: absolute; bottom: 2rem; left: 50%; transform: translateX(-50%);
+  display: flex; flex-direction: column; align-items: center; gap: 0.5rem;
+  color: rgba(255,255,255,.4); font-size: 0.65rem; letter-spacing: 0.2em;
+  text-transform: uppercase; z-index: 2;
+  animation: fade-up 1s ease both 1.3s;
+}
+.scroll-line {
+  width: 1px; height: 48px; background: linear-gradient(to bottom, transparent, var(--gold));
+  animation: scroll-pulse 2s ease-in-out infinite;
+}
+@keyframes scroll-pulse {
+  0%,100% { opacity: 0.4; transform: scaleY(1); }
+  50% { opacity: 1; transform: scaleY(1.2); }
+}
+@keyframes fade-up {
+  from { opacity: 0; transform: translateY(24px); }
+  to   { opacity: 1; transform: translateY(0); }
+}
+
+/* ══════════════════════════════════════════
+   TRUST BAR
+══════════════════════════════════════════ */
+#trust {
+  background: var(--black); border-top: 1px solid rgba(212,175,55,.2);
+  padding: 1.5rem 0;
+}
+.trust-inner {
+  display: flex; flex-wrap: wrap; justify-content: center;
+  gap: 1.5rem 3rem; align-items: center;
+}
+.trust-item {
+  display: flex; align-items: center; gap: 0.65rem;
+  font-size: 0.72rem; font-weight: 500; letter-spacing: 0.1em;
+  text-transform: uppercase; color: rgba(255,255,255,.6);
+}
+.trust-item svg { color: var(--gold); flex-shrink: 0; }
+
+/* ══════════════════════════════════════════
+   BEST SELLERS
+══════════════════════════════════════════ */
+#best-sellers { background: var(--white); }
+.section-header { text-align: center; margin-bottom: 3.5rem; }
+.section-eyebrow {
+  display: inline-block; font-size: 0.68rem; font-weight: 600;
+  letter-spacing: 0.25em; text-transform: uppercase; color: var(--gold);
+  margin-bottom: 0.8rem;
+}
+.section-title { color: var(--black); }
+.section-line {
+  width: 48px; height: 2px; background: var(--gold);
+  margin: 1.2rem auto 0; border-radius: 2px;
+}
+.products-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(280px, 1fr));
+  gap: 1.8rem;
+}
+.product-card {
+  background: var(--white); border: 1px solid var(--sand);
+  border-radius: var(--radius); overflow: hidden;
+  transition: var(--trans); cursor: pointer;
+  position: relative;
+}
+.product-card:hover {
+  transform: translateY(-6px);
+  box-shadow: 0 20px 48px rgba(0,0,0,.1);
+  border-color: rgba(212,175,55,.3);
+}
+.product-img-wrap {
+  position: relative; overflow: hidden;
+  aspect-ratio: 3/4; background: var(--beige);
+}
+.product-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.product-card:hover .product-img-wrap img { transform: scale(1.06); }
+
+/* Placeholder gradient for demo images */
+.product-placeholder {
+  width: 100%; height: 100%;
+  display: flex; align-items: center; justify-content: center;
+  color: rgba(0,0,0,.2); font-family: 'Cormorant', serif;
+  font-size: 3rem; font-style: italic;
+}
+
+.product-badge {
+  position: absolute; top: 1rem; left: 1rem;
+  font-size: 0.62rem; font-weight: 700; letter-spacing: 0.12em;
+  text-transform: uppercase; padding: 0.3rem 0.75rem;
+  border-radius: var(--radius);
+}
+.badge-new   { background: var(--black); color: var(--white); }
+.badge-promo { background: var(--gold);  color: var(--black); }
+.badge-trend { background: var(--beige); color: var(--black); border: 1px solid var(--sand); }
+
+.product-actions {
+  position: absolute; bottom: 1rem; left: 1rem; right: 1rem;
+  display: flex; gap: 0.6rem;
+  transform: translateY(8px); opacity: 0;
+  transition: var(--trans);
+}
+.product-card:hover .product-actions { transform: translateY(0); opacity: 1; }
+.product-add-cart {
+  flex: 1; padding: 0.75rem 1rem;
+  background: var(--black); color: var(--white);
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; border-radius: var(--radius);
+  transition: var(--trans);
+}
+.product-add-cart:hover { background: var(--gold); color: var(--black); }
+.product-wishlist {
+  width: 42px; height: 42px; background: var(--white);
+  display: flex; align-items: center; justify-content: center;
+  border-radius: var(--radius); transition: var(--trans);
+  border: 1px solid var(--sand);
+}
+.product-wishlist:hover { background: var(--gold); color: var(--black); }
+
+.product-info { padding: 1.2rem 1.2rem 1.4rem; }
+.product-name {
+  font-family: 'Cormorant', serif; font-size: 1.2rem;
+  font-weight: 500; color: var(--black); margin-bottom: 0.3rem;
+}
+.product-category {
+  font-size: 0.65rem; font-weight: 500; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gray); margin-bottom: 0.8rem;
+}
+.product-price-row { display: flex; align-items: center; gap: 0.75rem; }
+.product-price {
+  font-family: 'Cormorant', serif; font-size: 1.4rem;
+  font-weight: 600; color: var(--black);
+}
+.product-price-old {
+  font-size: 0.85rem; color: var(--gray);
+  text-decoration: line-through;
+}
+.product-rating { display: flex; gap: 2px; margin-top: 0.5rem; }
+.star { color: var(--gold); font-size: 0.7rem; }
+
+/* ══════════════════════════════════════════
+   WHY US
+══════════════════════════════════════════ */
+#why-us { background: var(--beige); }
+.why-grid {
+  display: grid; grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+  gap: 0;
+}
+.why-card {
+  padding: 2.8rem 2rem; text-align: center;
+  border-right: 1px solid var(--sand);
+  transition: var(--trans);
+}
+.why-card:last-child { border-right: none; }
+.why-card:hover { background: var(--white); }
+.why-icon {
+  width: 56px; height: 56px; background: var(--black);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  margin: 0 auto 1.5rem; color: var(--gold);
+  transition: var(--trans);
+}
+.why-card:hover .why-icon { background: var(--gold); color: var(--black); }
+.why-title {
+  font-family: 'Cormorant', serif; font-size: 1.35rem;
+  font-weight: 500; margin-bottom: 0.75rem; color: var(--black);
+}
+.why-text { font-size: 0.82rem; color: #666; line-height: 1.7; }
+
+/* ══════════════════════════════════════════
+   TESTIMONIALS
+══════════════════════════════════════════ */
+#testimonials { background: var(--black); color: var(--white); overflow: hidden; }
+#testimonials .section-title { color: var(--white); }
+.testimonials-track-wrap { overflow: hidden; margin-top: 3rem; }
+.testimonials-track {
+  display: flex; gap: 1.5rem;
+  animation: marquee 28s linear infinite;
+  width: max-content;
+}
+.testimonials-track:hover { animation-play-state: paused; }
+@keyframes marquee {
+  from { transform: translateX(0); }
+  to   { transform: translateX(-50%); }
+}
+.testimonial-card {
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 4px; padding: 2rem;
+  min-width: 320px; max-width: 360px;
+  flex-shrink: 0;
+  transition: var(--trans);
+}
+.testimonial-card:hover {
+  background: rgba(255,255,255,.09);
+  border-color: rgba(212,175,55,.3);
+}
+.testi-stars { display: flex; gap: 3px; margin-bottom: 1rem; }
+.testi-stars .star { color: var(--gold); font-size: 0.75rem; }
+.testi-text {
+  font-family: 'Cormorant', serif; font-size: 1.15rem;
+  font-style: italic; line-height: 1.6; color: rgba(255,255,255,.85);
+  margin-bottom: 1.5rem;
+}
+.testi-author { display: flex; align-items: center; gap: 0.75rem; }
+.testi-avatar {
+  width: 40px; height: 40px; border-radius: 50%;
+  background: linear-gradient(135deg, var(--gold), #8B6914);
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant', serif; font-size: 1rem; color: var(--black); font-weight: 600;
+}
+.testi-name { font-size: 0.8rem; font-weight: 600; color: var(--white); }
+.testi-location { font-size: 0.68rem; color: var(--gray); margin-top: 0.15rem; }
+
+/* ══════════════════════════════════════════
+   CATALOGUE / FILTER
+══════════════════════════════════════════ */
+#catalogue { background: var(--white); }
+.filter-bar {
+  display: flex; flex-wrap: wrap; gap: 0.6rem;
+  justify-content: center; margin-bottom: 3rem;
+}
+.filter-btn {
+  padding: 0.55rem 1.4rem; border: 1.5px solid var(--sand);
+  background: var(--white); font-size: 0.72rem; font-weight: 500;
+  letter-spacing: 0.1em; text-transform: uppercase; color: var(--dark);
+  border-radius: 100px; transition: var(--trans); cursor: pointer;
+}
+.filter-btn:hover, .filter-btn.active {
+  background: var(--black); color: var(--white); border-color: var(--black);
+}
+.catalogue-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(240px, 1fr));
+  gap: 1.5rem;
+}
+.cat-item {
+  position: relative; overflow: hidden; border-radius: var(--radius);
+  aspect-ratio: 1; cursor: pointer; background: var(--beige);
+}
+.cat-item-bg {
+  width: 100%; height: 100%; transition: transform 0.6s ease;
+  display: flex; align-items: center; justify-content: center;
+  font-family: 'Cormorant', serif; font-size: 2.5rem; font-style: italic;
+  color: rgba(0,0,0,.15);
+}
+.cat-item:hover .cat-item-bg { transform: scale(1.08); }
+.cat-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(0,0,0,.75) 0%, transparent 55%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.4rem; opacity: 0; transform: translateY(8px);
+  transition: var(--trans);
+}
+.cat-item:hover .cat-overlay { opacity: 1; transform: translateY(0); }
+.cat-name {
+  font-family: 'Cormorant', serif; font-size: 1.5rem;
+  font-weight: 500; color: var(--white); margin-bottom: 0.3rem;
+}
+.cat-count { font-size: 0.68rem; color: rgba(255,255,255,.65); letter-spacing: 0.12em; }
+
+/* ══════════════════════════════════════════
+   CTA FINAL
+══════════════════════════════════════════ */
+#cta-final {
+  background: var(--black); text-align: center; padding: 7rem 0;
+  position: relative; overflow: hidden;
+}
+#cta-final::before {
+  content: '';
+  position: absolute; top: 50%; left: 50%; transform: translate(-50%,-50%);
+  width: 600px; height: 600px;
+  background: radial-gradient(circle, rgba(212,175,55,.12) 0%, transparent 70%);
+  pointer-events: none;
+}
+.cta-badge {
+  display: inline-flex; align-items: center; gap: 0.5rem;
+  background: rgba(212,175,55,.15); border: 1px solid rgba(212,175,55,.3);
+  border-radius: 100px; padding: 0.4rem 1.1rem;
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 2rem;
+}
+.cta-badge::before { content: ''; width: 6px; height: 6px; border-radius: 50%; background: var(--gold); animation: pulse-dot 1.5s ease infinite; }
+@keyframes pulse-dot { 0%,100%{opacity:1} 50%{opacity:0.3} }
+#cta-final h2 { color: var(--white); font-size: clamp(2.2rem, 5vw, 4rem); max-width: 700px; margin: 0 auto 1.5rem; }
+.cta-sub { color: rgba(255,255,255,.55); max-width: 480px; margin: 0 auto 2.5rem; font-size: 0.9rem; }
+.cta-reassurance {
+  display: flex; flex-wrap: wrap; justify-content: center; gap: 1.5rem;
+  margin-top: 2.5rem;
+}
+.cta-reas-item {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.72rem; color: rgba(255,255,255,.45); letter-spacing: 0.08em;
+}
+.cta-reas-item svg { color: var(--gold); }
+
+/* ══════════════════════════════════════════
+   NEWSLETTER
+══════════════════════════════════════════ */
+#newsletter { background: var(--beige); padding: 5rem 0; }
+.newsletter-inner {
+  display: flex; flex-wrap: wrap; align-items: center;
+  gap: 2rem; justify-content: space-between;
+}
+.newsletter-text h3 { font-size: 1.8rem; margin-bottom: 0.5rem; }
+.newsletter-text p { font-size: 0.85rem; color: #666; max-width: 380px; }
+.newsletter-form {
+  display: flex; gap: 0; flex: 1; min-width: 300px; max-width: 480px;
+}
+.newsletter-input {
+  flex: 1; padding: 0.9rem 1.3rem;
+  border: 1.5px solid var(--sand); background: var(--white);
+  font-family: 'Montserrat', sans-serif; font-size: 0.82rem;
+  outline: none; transition: border 0.3s;
+  border-radius: var(--radius) 0 0 var(--radius);
+}
+.newsletter-input:focus { border-color: var(--gold); }
+.newsletter-submit {
+  padding: 0.9rem 1.8rem;
+  background: var(--black); color: var(--white);
+  font-family: 'Montserrat', sans-serif; font-size: 0.72rem;
+  font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase;
+  border-radius: 0 var(--radius) var(--radius) 0; transition: var(--trans);
+}
+.newsletter-submit:hover { background: var(--gold); color: var(--black); }
+
+/* ══════════════════════════════════════════
+   FOOTER
+══════════════════════════════════════════ */
+footer {
+  background: #0E0E0E; color: rgba(255,255,255,.6);
+  padding: 4.5rem 0 2rem;
+}
+.footer-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr 1fr 1fr;
+  gap: 3rem; padding-bottom: 3rem;
+  border-bottom: 1px solid rgba(255,255,255,.08);
+}
+.footer-brand .logo-text {
+  font-family: 'Cormorant', serif; font-size: 1.8rem;
+  color: var(--white); letter-spacing: 0.06em; margin-bottom: 1rem;
+}
+.footer-brand p { font-size: 0.82rem; line-height: 1.7; max-width: 280px; color: rgba(255,255,255,.45); }
+.footer-socials { display: flex; gap: 0.75rem; margin-top: 1.5rem; }
+.social-icon {
+  width: 38px; height: 38px; border: 1px solid rgba(255,255,255,.15);
+  border-radius: 50%; display: flex; align-items: center; justify-content: center;
+  color: rgba(255,255,255,.5); transition: var(--trans);
+}
+.social-icon:hover { border-color: var(--gold); color: var(--gold); }
+.footer-col h4 {
+  font-size: 0.68rem; font-weight: 700; letter-spacing: 0.2em;
+  text-transform: uppercase; color: var(--white); margin-bottom: 1.4rem;
+}
+.footer-col li { margin-bottom: 0.7rem; }
+.footer-col a {
+  font-size: 0.8rem; color: rgba(255,255,255,.45); transition: color 0.3s;
+}
+.footer-col a:hover { color: var(--gold); }
+.footer-bottom {
+  display: flex; flex-wrap: wrap; justify-content: space-between;
+  align-items: center; gap: 1rem; padding-top: 2rem;
+}
+.footer-copyright { font-size: 0.72rem; }
+.footer-legal { display: flex; gap: 2rem; }
+.footer-legal a { font-size: 0.72rem; color: rgba(255,255,255,.3); transition: color 0.3s; }
+.footer-legal a:hover { color: var(--gold); }
+.footer-wa {
+  display: flex; align-items: center; gap: 0.5rem;
+  font-size: 0.72rem; color: rgba(255,255,255,.45); transition: var(--trans);
+}
+.footer-wa:hover { color: #25D366; }
+
+/* ══════════════════════════════════════════
+   FLOATING ELEMENTS
+══════════════════════════════════════════ */
+/* WhatsApp FAB */
+.wa-fab {
+  position: fixed; bottom: 5.5rem; right: 1.5rem; z-index: 90;
+  width: 52px; height: 52px; background: #25D366; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--white); box-shadow: 0 4px 20px rgba(37,211,102,.4);
+  transition: var(--trans);
+}
+.wa-fab:hover { transform: scale(1.1); box-shadow: 0 8px 28px rgba(37,211,102,.5); }
+.wa-tooltip {
+  position: absolute; right: 64px; top: 50%; transform: translateY(-50%);
+  background: var(--black); color: var(--white);
+  font-size: 0.72rem; white-space: nowrap; padding: 0.4rem 0.9rem;
+  border-radius: 100px; opacity: 0; pointer-events: none;
+  transition: opacity 0.25s;
+}
+.wa-fab:hover .wa-tooltip { opacity: 1; }
+
+/* Sticky mobile CTA */
+.mobile-sticky-cta {
+  display: none; position: fixed; bottom: 0; left: 0; right: 0; z-index: 89;
+  padding: 0.9rem 1rem;
+  background: var(--black); border-top: 1px solid rgba(212,175,55,.25);
+}
+.mobile-sticky-cta .btn { width: 100%; justify-content: center; }
+
+/* ══════════════════════════════════════════
+   NEWSLETTER POPUP
+══════════════════════════════════════════ */
+.popup-overlay {
+  position: fixed; inset: 0; z-index: 200;
+  background: rgba(0,0,0,.7); backdrop-filter: blur(4px);
+  display: flex; align-items: center; justify-content: center;
+  opacity: 0; pointer-events: none; transition: opacity 0.4s;
+}
+.popup-overlay.open { opacity: 1; pointer-events: all; }
+.popup-box {
+  background: var(--white); width: 90%; max-width: 520px;
+  padding: 3rem; position: relative;
+  transform: translateY(24px) scale(0.96);
+  transition: transform 0.4s ease;
+}
+.popup-overlay.open .popup-box { transform: none; }
+.popup-close {
+  position: absolute; top: 1rem; right: 1rem;
+  color: var(--gray); transition: color 0.3s; cursor: pointer;
+}
+.popup-close:hover { color: var(--black); }
+.popup-eyebrow { color: var(--gold); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.2em; text-transform: uppercase; margin-bottom: 0.75rem; }
+.popup-title { font-family: 'Cormorant', serif; font-size: 2rem; margin-bottom: 0.75rem; }
+.popup-text { font-size: 0.83rem; color: #666; margin-bottom: 1.8rem; }
+.popup-form { display: flex; flex-direction: column; gap: 0.9rem; }
+.popup-input {
+  padding: 0.9rem 1.2rem; border: 1.5px solid var(--sand);
+  font-family: 'Montserrat', sans-serif; font-size: 0.83rem; outline: none;
+  transition: border 0.3s;
+}
+.popup-input:focus { border-color: var(--gold); }
+.popup-disclaimer { font-size: 0.68rem; color: var(--gray); text-align: center; }
+
+/* ══════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════ */
+@media (max-width: 1024px) {
+  .footer-grid { grid-template-columns: 1fr 1fr; }
+  .why-card { border-right: none; border-bottom: 1px solid var(--sand); }
+  .why-card:last-child { border-bottom: none; }
+}
+@media (max-width: 768px) {
+  .nav-links, .nav-cta { display: none; }
+  .hamburger { display: flex; }
+  .hero-stats { flex-wrap: wrap; gap: 1.5rem; }
+  .why-grid { grid-template-columns: 1fr 1fr; }
+  .footer-grid { grid-template-columns: 1fr; }
+  .newsletter-inner { flex-direction: column; }
+  .newsletter-form { max-width: 100%; width: 100%; }
+  .mobile-sticky-cta { display: block; }
+  .wa-fab { bottom: 5rem; }
+  .catalogue-grid { grid-template-columns: repeat(2, 1fr); }
+  .products-grid { grid-template-columns: repeat(2, 1fr); gap: 1rem; }
+  .cat-overlay { opacity: 1; transform: none; }
+}
+@media (max-width: 480px) {
+  .products-grid { grid-template-columns: 1fr; }
+  .catalogue-grid { grid-template-columns: 1fr; }
+  .why-grid { grid-template-columns: 1fr; }
+  .hero-ctas { flex-direction: column; }
+  .hero-ctas .btn { width: 100%; text-align: center; justify-content: center; }
+  .footer-bottom { flex-direction: column; text-align: center; }
+  .footer-legal { flex-wrap: wrap; justify-content: center; }
+}
+
+/* ── HERO IMAGE ── */
+.hero-img-overlay {
+  position: absolute; inset: 0; z-index: 1;
+  background: linear-gradient(to bottom, rgba(10,8,6,.72) 0%, rgba(10,8,6,.55) 50%, rgba(10,8,6,.8) 100%);
+}
+.hero-bg-img {
+  position: absolute; inset: 0; z-index: 0;
+  width: 100%; height: 100%; object-fit: cover;
+  transform-origin: center; animation: hero-zoom 12s ease-in-out infinite alternate;
+}
+@keyframes hero-zoom {
+  from { transform: scale(1); }
+  to   { transform: scale(1.06); }
+}
+
+/* ── PRODUCT IMG ── */
+.product-img-wrap img { width:100%; height:100%; object-fit:cover; display:block; }
+
+/* ── CAT REAL IMG ── */
+.cat-real-img {
+  position: absolute; inset: 0; width:100%; height:100%;
+  object-fit: cover;
+  transition: transform 0.6s ease;
+}
+.cat-item:hover .cat-real-img { transform: scale(1.08); }
+
+/* ══════════════════════════════════════════
+   CART DRAWER
+══════════════════════════════════════════ */
+.cart-overlay {
+  position: fixed; inset: 0; z-index: 150;
+  background: rgba(0,0,0,.5); backdrop-filter: blur(3px);
+  opacity: 0; pointer-events: none; transition: opacity 0.35s;
+}
+.cart-overlay.open { opacity: 1; pointer-events: all; }
+
+.cart-drawer {
+  position: fixed; top: 0; right: 0; bottom: 0; z-index: 151;
+  width: min(420px, 100vw);
+  background: var(--white);
+  display: flex; flex-direction: column;
+  transform: translateX(100%);
+  transition: transform 0.4s cubic-bezier(.4,0,.2,1);
+  box-shadow: -8px 0 40px rgba(0,0,0,.15);
+}
+.cart-drawer.open { transform: translateX(0); }
+
+.cart-drawer-head {
+  display: flex; align-items: center; justify-content: space-between;
+  padding: 1.4rem 1.6rem;
+  border-bottom: 1px solid var(--sand);
+}
+.cart-drawer-title {
+  font-family: 'Cormorant', serif; font-size: 1.5rem; font-weight: 500;
+}
+.cart-close-btn {
+  width: 36px; height: 36px; border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  color: var(--dark); transition: var(--trans); cursor: pointer;
+}
+.cart-close-btn:hover { background: var(--sand); }
+
+.cart-items {
+  flex: 1; overflow-y: auto; padding: 1.2rem 1.6rem;
+  display: flex; flex-direction: column; gap: 1.2rem;
+}
+.cart-item {
+  display: flex; gap: 1rem; align-items: flex-start;
+  padding-bottom: 1.2rem;
+  border-bottom: 1px solid var(--sand);
+}
+.cart-item:last-child { border-bottom: none; }
+.cart-item-img {
+  width: 72px; height: 88px; object-fit: cover;
+  border-radius: 2px; flex-shrink: 0; background: var(--beige);
+}
+.cart-item-info { flex: 1; }
+.cart-item-cat {
+  font-size: 0.62rem; letter-spacing: 0.14em; text-transform: uppercase;
+  color: var(--gray); margin-bottom: 0.2rem;
+}
+.cart-item-name {
+  font-family: 'Cormorant', serif; font-size: 1.05rem; font-weight: 500;
+  margin-bottom: 0.5rem; color: var(--black);
+}
+.cart-item-price {
+  font-family: 'Cormorant', serif; font-size: 1.15rem; font-weight: 600;
+  color: var(--black);
+}
+.cart-item-controls {
+  display: flex; align-items: center; gap: 0.6rem; margin-top: 0.6rem;
+}
+.qty-btn {
+  width: 28px; height: 28px; border: 1.5px solid var(--sand);
+  border-radius: 2px; display: flex; align-items: center; justify-content: center;
+  font-size: 1rem; font-weight: 500; color: var(--dark);
+  transition: var(--trans); cursor: pointer; line-height: 1;
+}
+.qty-btn:hover { border-color: var(--black); background: var(--black); color: var(--white); }
+.qty-value {
+  font-size: 0.85rem; font-weight: 600; min-width: 20px; text-align: center;
+}
+.cart-item-remove {
+  margin-left: auto; color: var(--gray); cursor: pointer;
+  transition: color 0.3s; padding: 4px;
+}
+.cart-item-remove:hover { color: #c0392b; }
+
+.cart-empty {
+  flex: 1; display: flex; flex-direction: column;
+  align-items: center; justify-content: center; gap: 1rem;
+  color: var(--gray); text-align: center; padding: 2rem;
+}
+.cart-empty-icon { color: var(--sand); }
+.cart-empty p { font-size: 0.9rem; }
+
+.cart-drawer-foot {
+  padding: 1.4rem 1.6rem;
+  border-top: 1px solid var(--sand);
+  background: var(--beige);
+}
+.cart-total-row {
+  display: flex; justify-content: space-between; align-items: center;
+  margin-bottom: 1.2rem;
+}
+.cart-total-label { font-size: 0.75rem; font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase; }
+.cart-total-value {
+  font-family: 'Cormorant', serif; font-size: 1.6rem; font-weight: 600;
+}
+.cart-checkout-btn {
+  width: 100%; padding: 1rem;
+  background: var(--black); color: var(--white);
+  font-family: 'Montserrat', sans-serif; font-size: 0.75rem;
+  font-weight: 600; letter-spacing: 0.15em; text-transform: uppercase;
+  border-radius: 2px; transition: var(--trans); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+}
+.cart-checkout-btn:hover { background: var(--gold); color: var(--black); }
+.cart-wa-btn {
+  width: 100%; margin-top: 0.75rem; padding: 0.85rem;
+  background: #25D366; color: var(--white);
+  font-family: 'Montserrat', sans-serif; font-size: 0.72rem;
+  font-weight: 600; letter-spacing: 0.12em; text-transform: uppercase;
+  border-radius: 2px; transition: var(--trans); cursor: pointer;
+  display: flex; align-items: center; justify-content: center; gap: 0.6rem;
+}
+.cart-wa-btn:hover { background: #128C7E; }
+.cart-note {
+  font-size: 0.65rem; color: var(--gray); text-align: center; margin-top: 0.75rem;
+}
+
+/* Add-to-cart feedback */
+.add-feedback {
+  position: fixed; bottom: 6rem; left: 50%; transform: translateX(-50%) translateY(10px);
+  background: var(--black); color: var(--white);
+  padding: 0.7rem 1.5rem; border-radius: 100px;
+  font-size: 0.75rem; font-weight: 600; letter-spacing: 0.1em;
+  opacity: 0; pointer-events: none; z-index: 200;
+  transition: opacity 0.3s, transform 0.3s;
+  white-space: nowrap;
+}
+.add-feedback.show { opacity: 1; transform: translateX(-50%) translateY(0); }
+
+/* ── REDUCED MOTION ── */
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after {
+    animation-duration: 0.01ms !important;
+    transition-duration: 0.15ms !important;
+  }
+}
+</style>
+</head>
+<body>
+
+<!-- ════════════════════ NAVBAR ════════════════════ -->
+<nav id="navbar" aria-label="Navigation principale">
+  <div class="container nav-inner">
+    <a href="#" class="nav-logo" aria-label="Oryzon Deco — Accueil">Oryzon Deco</a>
+    <ul class="nav-links" role="list">
+      <li><a href="#best-sellers">Collections</a></li>
+      <li><a href="#catalogue">Catalogue</a></li>
+      <li><a href="#why-us">À propos</a></li>
+      <li><a href="#testimonials">Avis</a></li>
+      <li><a href="#newsletter">Contact</a></li>
+    </ul>
+    <div class="nav-actions">
+      <button class="nav-icon-btn" aria-label="Rechercher">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><circle cx="11" cy="11" r="8"/><path d="M21 21l-4.35-4.35"/></svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Favoris">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg>
+      </button>
+      <button class="nav-icon-btn" aria-label="Panier — 2 articles">
+        <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <span class="cart-count" aria-label="2 articles">2</span>
+      </button>
+      <a href="#commander" class="nav-cta">Commander</a>
+      <button class="hamburger" id="hamburgerBtn" aria-label="Menu" aria-expanded="false">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</nav>
+
+<!-- Mobile Menu -->
+<div class="mobile-menu" id="mobileMenu" role="dialog" aria-label="Menu mobile" aria-modal="true">
+  <button class="mobile-close" id="mobileClose" aria-label="Fermer le menu">
+    <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+  </button>
+  <a href="#best-sellers">Collections</a>
+  <a href="#catalogue">Catalogue</a>
+  <a href="#why-us">Notre histoire</a>
+  <a href="#testimonials">Avis clients</a>
+  <a href="#newsletter">Contact</a>
+  <a href="#commander" class="btn btn-gold" style="font-size:.8rem">Commander maintenant</a>
+</div>
+
+<!-- ════════════════════ HERO ════════════════════ -->
+<section id="hero" aria-label="Accueil">
+  <div class="hero-bg">
+    <img class="hero-bg-img" src="https://images.unsplash.com/photo-1772797583328-f83bc3f94f80?w=1920&q=85&fit=crop&crop=center" alt="" aria-hidden="true" loading="eager" fetchpriority="high">
+    <div class="hero-img-overlay" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-1" aria-hidden="true"></div>
+    <div class="hero-blob hero-blob-2" aria-hidden="true"></div>
+    <div class="hero-line hero-line-v hero-line-1" aria-hidden="true"></div>
+    <div class="hero-line hero-line-v hero-line-2" aria-hidden="true"></div>
+    <div class="hero-line hero-line-h hero-line-3" aria-hidden="true"></div>
+    <div class="hero-line hero-line-h hero-line-4" aria-hidden="true"></div>
+  </div>
+  <div class="container hero-content">
+    <p class="hero-eyebrow" aria-label="Style Japandi — Mayotte">Style Japandi · Mayotte</p>
+    <h1 class="hero-title">
+      Intérieurs<br>
+      minimalistes &<br>
+      <em>naturellement beaux</em>
+    </h1>
+    <p class="hero-subtitle">
+      Mobilier, luminaires et objets de décoration dans l'esprit Japandi — cette fusion zen du design japonais et scandinave. Livraison sur toute l'île de Mayotte.
+    </p>
+    <div class="hero-ctas">
+      <a href="#catalogue" class="btn btn-gold">
+        <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+        Découvrir la collection
+      </a>
+      <a href="#commander" class="btn btn-outline">Commander maintenant</a>
+    </div>
+    <div class="hero-stats" aria-label="Chiffres clés">
+      <div class="hero-stat">
+        <div class="hero-stat-num">140<span style="color:var(--gold)">+</span></div>
+        <div class="hero-stat-label">Commandes livrées</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">130<span style="color:var(--gold)">+</span></div>
+        <div class="hero-stat-label">Pièces disponibles</div>
+      </div>
+      <div class="hero-stat">
+        <div class="hero-stat-num">4.9<span style="color:var(--gold)">★</span></div>
+        <div class="hero-stat-label">Note moyenne</div>
+      </div>
+    </div>
+  </div>
+  <div class="hero-scroll" aria-hidden="true">
+    <div class="scroll-line"></div>
+    <span>Découvrir</span>
+  </div>
+</section>
+
+<!-- ════════════════════ TRUST BAR ════════════════════ -->
+<div id="trust" aria-label="Nos engagements">
+  <div class="container trust-inner">
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+      Livraison sur toute l'île de Mayotte
+    </div>
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+      Paiement 100% sécurisé
+    </div>
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><polyline points="23 4 23 10 17 10"/><path d="M20.49 15a9 9 0 11-2.12-9.36L23 10"/></svg>
+      Retours sous 30 jours
+    </div>
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 14a16 16 0 006 6l.41-.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2z"/></svg>
+      Support WhatsApp 7j/7
+    </div>
+    <div class="trust-item">
+      <svg width="18" height="18" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24" aria-hidden="true"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+      Sélection haut de gamme
+    </div>
+  </div>
+</div>
+
+<!-- ════════════════════ BEST SELLERS ════════════════════ -->
+<section id="best-sellers" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Best sellers</span>
+      <h2 class="section-title">Les favoris de la saison</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="products-grid">
+
+      <!-- Produit 1 : Vases Céramique -->
+      <article class="product-card reveal reveal-delay-1">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1631125915902-d8abe9225ff2?w=600&h=800&fit=crop&q=80" alt="Set de 3 vases en argile naturelle — Oryzon Deco" loading="lazy">
+          <span class="product-badge badge-new">Nouveau</span>
+          <div class="product-actions">
+            <button class="product-add-cart" aria-label="Ajouter Set Vases Argile au panier">Ajouter au panier</button>
+            <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Vases & Céramiques</p>
+          <h3 class="product-name">Set Vases Argile</h3>
+          <div class="product-price-row"><span class="product-price">89,00 €</span></div>
+          <div class="product-rating" aria-label="4.9 étoiles sur 5">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+            <span style="font-size:.68rem;color:var(--gray);margin-left:.3rem">(38)</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produit 2 : Suspension Rotin -->
+      <article class="product-card reveal reveal-delay-2">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1578678809569-1a8ead9cb802?w=600&h=800&fit=crop&q=80" alt="Suspension en rotin naturel tissé — Oryzon Deco" loading="lazy">
+          <span class="product-badge badge-trend">Tendance</span>
+          <div class="product-actions">
+            <button class="product-add-cart" aria-label="Ajouter Suspension Rotin au panier">Ajouter au panier</button>
+            <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Luminaires</p>
+          <h3 class="product-name">Suspension Rotin</h3>
+          <div class="product-price-row">
+            <span class="product-price">129,00 €</span>
+            <span class="product-price-old">159,00 €</span>
+          </div>
+          <div class="product-rating" aria-label="5 étoiles sur 5">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+            <span style="font-size:.68rem;color:var(--gray);margin-left:.3rem">(74)</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produit 3 : Tapis Jute -->
+      <article class="product-card reveal reveal-delay-3">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1762758889413-64d717f81b0d?w=600&h=800&fit=crop&q=80" alt="Tapis rond en jute naturel — Oryzon Deco" loading="lazy">
+          <span class="product-badge badge-new">Nouveau</span>
+          <div class="product-actions">
+            <button class="product-add-cart" aria-label="Ajouter Tapis Jute Naturel au panier">Ajouter au panier</button>
+            <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Tapis & Textiles</p>
+          <h3 class="product-name">Tapis Jute Naturel</h3>
+          <div class="product-price-row"><span class="product-price">149,00 €</span></div>
+          <div class="product-rating" aria-label="4.8 étoiles sur 5">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+            <span style="font-size:.68rem;color:var(--gray);margin-left:.3rem">(52)</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produit 4 : Meuble Vasque -->
+      <article class="product-card reveal reveal-delay-4">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1771372012124-f7696f374a5a?w=600&h=800&fit=crop&q=80" alt="Meuble vasque en bois naturel salle de bain — Oryzon Deco" loading="lazy">
+          <span class="product-badge badge-promo">-15%</span>
+          <div class="product-actions">
+            <button class="product-add-cart" aria-label="Ajouter Meuble Vasque Bambou au panier">Ajouter au panier</button>
+            <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Salle de bain</p>
+          <h3 class="product-name">Meuble Vasque Bambou</h3>
+          <div class="product-price-row">
+            <span class="product-price">289,00 €</span>
+            <span class="product-price-old">339,00 €</span>
+          </div>
+          <div class="product-rating" aria-label="4.9 étoiles sur 5">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+            <span style="font-size:.68rem;color:var(--gray);margin-left:.3rem">(29)</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produit 5 : Table à Manger -->
+      <article class="product-card reveal reveal-delay-1">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1600488999806-8efb986d87b1?w=600&h=800&fit=crop&q=80" alt="Table à manger en bois massif naturel — Oryzon Deco" loading="lazy">
+          <span class="product-badge badge-trend">Tendance</span>
+          <div class="product-actions">
+            <button class="product-add-cart" aria-label="Ajouter Table à Manger Teck au panier">Ajouter au panier</button>
+            <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Mobilier Salle à Manger</p>
+          <h3 class="product-name">Table à Manger Teck</h3>
+          <div class="product-price-row"><span class="product-price">389,00 €</span></div>
+          <div class="product-rating" aria-label="4.9 étoiles sur 5">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+            <span style="font-size:.68rem;color:var(--gray);margin-left:.3rem">(21)</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produit 6 : Tête de lit -->
+      <article class="product-card reveal reveal-delay-2">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1766733041960-0de62f403e7b?w=600&h=800&fit=crop&q=80" alt="Tête de lit capitonnée design neutre — Oryzon Deco" loading="lazy">
+          <span class="product-badge badge-new">Nouveau</span>
+          <div class="product-actions">
+            <button class="product-add-cart" aria-label="Ajouter Tête de Lit Capitonnée au panier">Ajouter au panier</button>
+            <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Chambre & Literie</p>
+          <h3 class="product-name">Tête de Lit Capitonnée</h3>
+          <div class="product-price-row"><span class="product-price">219,00 €</span></div>
+          <div class="product-rating" aria-label="5 étoiles sur 5">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+            <span style="font-size:.68rem;color:var(--gray);margin-left:.3rem">(47)</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produit 7 : Canapé Lin -->
+      <article class="product-card reveal reveal-delay-3">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1778088442792-29c430a4c93f?w=600&h=800&fit=crop&q=80" alt="Canapé sectionnel en lin naturel beige — Oryzon Deco" loading="lazy">
+          <span class="product-badge badge-trend">N°1 Vente</span>
+          <div class="product-actions">
+            <button class="product-add-cart" aria-label="Ajouter Canapé Lin Japandi au panier">Ajouter au panier</button>
+            <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Mobilier Salon</p>
+          <h3 class="product-name">Canapé Lin Japandi</h3>
+          <div class="product-price-row"><span class="product-price">549,00 €</span></div>
+          <div class="product-rating" aria-label="5 étoiles sur 5">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+            <span style="font-size:.68rem;color:var(--gray);margin-left:.3rem">(93)</span>
+          </div>
+        </div>
+      </article>
+
+      <!-- Produit 8 : Lustre Bambou -->
+      <article class="product-card reveal reveal-delay-4">
+        <div class="product-img-wrap">
+          <img src="https://images.unsplash.com/photo-1768320912065-78aac5927678?w=600&h=800&fit=crop&q=80" alt="Lustre en bambou tissé artisanal — Oryzon Deco" loading="lazy">
+          <span class="product-badge badge-promo">-10%</span>
+          <div class="product-actions">
+            <button class="product-add-cart" aria-label="Ajouter Lustre Bambou Tissé au panier">Ajouter au panier</button>
+            <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
+          </div>
+        </div>
+        <div class="product-info">
+          <p class="product-category">Luminaires</p>
+          <h3 class="product-name">Lustre Bambou Tissé</h3>
+          <div class="product-price-row">
+            <span class="product-price">109,00 €</span>
+            <span class="product-price-old">119,00 €</span>
+          </div>
+          <div class="product-rating" aria-label="4.9 étoiles sur 5">
+            <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
+            <span style="font-size:.68rem;color:var(--gray);margin-left:.3rem">(61)</span>
+          </div>
+        </div>
+      </article>
+
+    </div>
+    <div style="text-align:center;margin-top:3rem" class="reveal">
+      <a href="#catalogue" class="btn btn-dark">Voir toute la collection</a>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ WHY US ════════════════════ -->
+<section id="why-us" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">L'expérience Oryzon</span>
+      <h2 class="section-title">Pourquoi nous choisir</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="why-grid reveal">
+      <div class="why-card">
+        <div class="why-icon" aria-hidden="true">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"/></svg>
+        </div>
+        <h3 class="why-title">Sélection Premium</h3>
+        <p class="why-text">Chaque pièce est soigneusement choisie pour sa qualité exceptionnelle, son esthétique et son unicité. Nous ne proposons que le meilleur.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" aria-hidden="true">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><rect x="1" y="3" width="15" height="13"/><polygon points="16 8 20 8 23 11 23 16 16 16 16 8"/><circle cx="5.5" cy="18.5" r="2.5"/><circle cx="18.5" cy="18.5" r="2.5"/></svg>
+        </div>
+        <h3 class="why-title">Livraison Soignée</h3>
+        <p class="why-text">Vos commandes sont emballées avec soin et expédiées rapidement. Livraison offerte dès 80€ et suivi en temps réel.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" aria-hidden="true">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/></svg>
+        </div>
+        <h3 class="why-title">Paiement Sécurisé</h3>
+        <p class="why-text">Transactions protégées SSL, paiement en plusieurs fois disponible. Votre sécurité est notre priorité absolue.</p>
+      </div>
+      <div class="why-card">
+        <div class="why-icon" aria-hidden="true">
+          <svg width="22" height="22" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M22 16.92v3a2 2 0 01-2.18 2 19.79 19.79 0 01-8.63-3.07A19.5 19.5 0 013.07 9.81a2 2 0 012-2.18h3a2 2 0 012 1.72c.127.96.361 1.903.7 2.81a2 2 0 01-.45 2.11L9.91 14a16 16 0 006 6l.41-.41a2 2 0 012.11-.45c.907.339 1.85.573 2.81.7a2 2 0 011.72 2z"/></svg>
+        </div>
+        <h3 class="why-title">Support 7j/7</h3>
+        <p class="why-text">Notre équipe est disponible tous les jours sur WhatsApp pour répondre à toutes vos questions et vous accompagner.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ TESTIMONIALS ════════════════════ -->
+<section id="testimonials" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow" style="color:var(--gold)">Témoignages</span>
+      <h2 class="section-title" style="color:var(--white)">Ce que disent nos clients</h2>
+      <div class="section-line"></div>
+    </div>
+  </div>
+  <div class="testimonials-track-wrap reveal">
+    <div class="testimonials-track" role="list">
+      <div class="testimonial-card" role="listitem">
+        <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Ma maison a été complètement transformée. La suspension en rotin est sublime dans mon salon. Mes voisins veulent tous la même !"</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">F</div>
+          <div><p class="testi-name">Fatouma Ousseni</p><p class="testi-location">Mamoudzou, Mayotte</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Livraison rapide à Koungou, emballage très soigné. Les vases en argile sont exactement comme sur les photos. Qualité top !"</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">I</div>
+          <div><p class="testi-name">Ibrahim Anzilane</p><p class="testi-location">Koungou, Mayotte</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"J'ai commandé via DM et tout s'est passé parfaitement. Le canapé lin est d'une douceur incroyable. Je recommande à toute la famille."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">N</div>
+          <div><p class="testi-name">Nassra Attoumani</p><p class="testi-location">Dzaoudzi, Mayotte</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Enfin une vraie adresse déco à Mayotte ! Le tapis jute dans ma chambre donne une ambiance tellement apaisante. Merci Oryzon Deco."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">Z</div>
+          <div><p class="testi-name">Zainaba Saïd</p><p class="testi-location">Chiconi, Mayotte</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Le meuble vasque bambou a transformé ma salle de bain. Service impeccable, livraison à Bandraboua sans problème. Très satisfait !"</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">M</div>
+          <div><p class="testi-name">Moussa Hamidou</p><p class="testi-location">Bandraboua, Mayotte</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"La table à manger teck est magnifique. Toute ma famille se retrouve maintenant autour avec plaisir. Oryzon Deco, c'est une valeur sûre !"</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">D</div>
+          <div><p class="testi-name">Djaoulati Mouhamed</p><p class="testi-location">Pamandzi, Mayotte</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Commande passée un soir sur WhatsApp, livrée le lendemain à Sada. L'ambiance Japandi de mon intérieur est exactement ce que je voulais."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">H</div>
+          <div><p class="testi-name">Houmeyda Oubeidillah</p><p class="testi-location">Sada, Mayotte</p></div>
+        </div>
+      </div>
+      <div class="testimonial-card" role="listitem">
+        <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"La tête de lit capitonnée donne à ma chambre un look d'hôtel 5 étoiles. Très bon rapport qualité prix et livraison soignée à Tsingoni."</p>
+        <div class="testi-author">
+          <div class="testi-avatar" aria-hidden="true">A</div>
+          <div><p class="testi-name">Anzilane Bacar</p><p class="testi-location">Tsingoni, Mayotte</p></div>
+        </div>
+      </div>
+      <!-- Duplicate for seamless loop -->
+      <div class="testimonial-card" role="listitem" aria-hidden="true">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Ma maison a été complètement transformée. La suspension en rotin est sublime dans mon salon. Mes voisins veulent tous la même !"</p>
+        <div class="testi-author"><div class="testi-avatar">F</div><div><p class="testi-name">Fatouma Ousseni</p><p class="testi-location">Mamoudzou, Mayotte</p></div></div>
+      </div>
+      <div class="testimonial-card" role="listitem" aria-hidden="true">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Livraison rapide à Koungou, emballage très soigné. Les vases en argile sont exactement comme sur les photos. Qualité top !"</p>
+        <div class="testi-author"><div class="testi-avatar">I</div><div><p class="testi-name">Ibrahim Anzilane</p><p class="testi-location">Koungou, Mayotte</p></div></div>
+      </div>
+      <div class="testimonial-card" role="listitem" aria-hidden="true">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"J'ai commandé via DM et tout s'est passé parfaitement. Le canapé lin est d'une douceur incroyable. Je recommande à toute la famille."</p>
+        <div class="testi-author"><div class="testi-avatar">N</div><div><p class="testi-name">Nassra Attoumani</p><p class="testi-location">Dzaoudzi, Mayotte</p></div></div>
+      </div>
+      <div class="testimonial-card" role="listitem" aria-hidden="true">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Enfin une vraie adresse déco à Mayotte ! Le tapis jute dans ma chambre donne une ambiance tellement apaisante. Merci Oryzon Deco."</p>
+        <div class="testi-author"><div class="testi-avatar">Z</div><div><p class="testi-name">Zainaba Saïd</p><p class="testi-location">Chiconi, Mayotte</p></div></div>
+      </div>
+      <div class="testimonial-card" role="listitem" aria-hidden="true">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Le meuble vasque bambou a transformé ma salle de bain. Service impeccable, livraison à Bandraboua sans problème. Très satisfait !"</p>
+        <div class="testi-author"><div class="testi-avatar">M</div><div><p class="testi-name">Moussa Hamidou</p><p class="testi-location">Bandraboua, Mayotte</p></div></div>
+      </div>
+      <div class="testimonial-card" role="listitem" aria-hidden="true">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"La table à manger teck est magnifique. Toute ma famille se retrouve maintenant autour avec plaisir. Oryzon Deco, c'est une valeur sûre !"</p>
+        <div class="testi-author"><div class="testi-avatar">D</div><div><p class="testi-name">Djaoulati Mouhamed</p><p class="testi-location">Pamandzi, Mayotte</p></div></div>
+      </div>
+      <div class="testimonial-card" role="listitem" aria-hidden="true">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"Commande passée un soir sur WhatsApp, livrée le lendemain à Sada. L'ambiance Japandi de mon intérieur est exactement ce que je voulais."</p>
+        <div class="testi-author"><div class="testi-avatar">H</div><div><p class="testi-name">Houmeyda Oubeidillah</p><p class="testi-location">Sada, Mayotte</p></div></div>
+      </div>
+      <div class="testimonial-card" role="listitem" aria-hidden="true">
+        <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
+        <p class="testi-text">"La tête de lit capitonnée donne à ma chambre un look d'hôtel 5 étoiles. Très bon rapport qualité prix et livraison soignée à Tsingoni."</p>
+        <div class="testi-author"><div class="testi-avatar">A</div><div><p class="testi-name">Anzilane Bacar</p><p class="testi-location">Tsingoni, Mayotte</p></div></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ CATALOGUE ════════════════════ -->
+<section id="catalogue" class="section-pad">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Explorer</span>
+      <h2 class="section-title">Notre catalogue</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="filter-bar reveal" role="group" aria-label="Filtrer par catégorie">
+      <button class="filter-btn active" data-filter="all" aria-pressed="true">Tout voir</button>
+      <button class="filter-btn" data-filter="salon" aria-pressed="false">Salon & Mobilier</button>
+      <button class="filter-btn" data-filter="luminaires" aria-pressed="false">Luminaires</button>
+      <button class="filter-btn" data-filter="chambre" aria-pressed="false">Chambre</button>
+      <button class="filter-btn" data-filter="bain" aria-pressed="false">Salle de Bain</button>
+      <button class="filter-btn" data-filter="vases" aria-pressed="false">Vases & Céramiques</button>
+      <button class="filter-btn" data-filter="textiles" aria-pressed="false">Tapis & Textiles</button>
+    </div>
+    <div class="catalogue-grid reveal">
+      <div class="cat-item" data-category="salon" tabindex="0" role="button" aria-label="Explorer Mobilier Salon">
+        <img class="cat-real-img" src="https://plus.unsplash.com/premium_photo-1724013063111-fbca04cd9c63?w=600&h=600&fit=crop&q=80" alt="Salon Japandi minimaliste" loading="lazy">
+        <div class="cat-overlay">
+          <p class="cat-name">Salon & Mobilier</p>
+          <p class="cat-count">28 produits</p>
+        </div>
+      </div>
+      <div class="cat-item" data-category="luminaires" tabindex="0" role="button" aria-label="Explorer Luminaires">
+        <img class="cat-real-img" src="https://images.unsplash.com/photo-1643509877015-c90830bb8519?w=600&h=600&fit=crop&q=80" alt="Luminaire en osier naturel" loading="lazy">
+        <div class="cat-overlay">
+          <p class="cat-name">Luminaires</p>
+          <p class="cat-count">19 produits</p>
+        </div>
+      </div>
+      <div class="cat-item" data-category="bain" tabindex="0" role="button" aria-label="Explorer Salle de Bain">
+        <img class="cat-real-img" src="https://plus.unsplash.com/premium_photo-1676319481666-1d558d578fab?w=600&h=600&fit=crop&q=80" alt="Salle de bain design naturel" loading="lazy">
+        <div class="cat-overlay">
+          <p class="cat-name">Salle de Bain</p>
+          <p class="cat-count">14 produits</p>
+        </div>
+      </div>
+      <div class="cat-item" data-category="chambre" tabindex="0" role="button" aria-label="Explorer Chambre & Literie">
+        <img class="cat-real-img" src="https://images.unsplash.com/photo-1699869653495-fe26f4c70b3e?w=600&h=600&fit=crop&q=80" alt="Chambre minimaliste miroir rond" loading="lazy">
+        <div class="cat-overlay">
+          <p class="cat-name">Chambre & Literie</p>
+          <p class="cat-count">22 produits</p>
+        </div>
+      </div>
+      <div class="cat-item" data-category="vases" tabindex="0" role="button" aria-label="Explorer Vases & Céramiques">
+        <img class="cat-real-img" src="https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?w=600&h=600&fit=crop&q=80" alt="Vases céramique sur bois" loading="lazy">
+        <div class="cat-overlay">
+          <p class="cat-name">Vases & Céramiques</p>
+          <p class="cat-count">24 produits</p>
+        </div>
+      </div>
+      <div class="cat-item" data-category="textiles" tabindex="0" role="button" aria-label="Explorer Tapis & Textiles">
+        <img class="cat-real-img" src="https://images.unsplash.com/photo-1778088442792-29c430a4c93f?w=600&h=600&fit=crop&q=80" alt="Canapé beige avec tapis naturel" loading="lazy">
+        <div class="cat-overlay">
+          <p class="cat-name">Tapis & Textiles</p>
+          <p class="cat-count">33 produits</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ CTA FINAL ════════════════════ -->
+<section id="cta-final" id="commander">
+  <div class="container" style="position:relative;z-index:1">
+    <div class="reveal">
+      <div class="cta-badge">Livraison sur toute l'île · Mayotte 2025</div>
+    </div>
+    <h2 class="reveal reveal-delay-1">Transformez votre intérieur<br><em class="serif" style="font-style:italic;color:var(--gold)">dès aujourd'hui</em></h2>
+    <p class="cta-sub reveal reveal-delay-2">Livraison offerte · Retours gratuits 30 jours · Paiement sécurisé</p>
+    <div class="reveal reveal-delay-3" style="display:flex;flex-wrap:wrap;gap:1rem;justify-content:center">
+      <a href="#catalogue" class="btn btn-gold" style="padding:1.1rem 2.8rem;font-size:.8rem">
+        Commander maintenant
+      </a>
+      <a href="https://wa.me/33600000000" class="btn btn-outline" target="_blank" rel="noopener" style="padding:1.1rem 2.2rem;font-size:.8rem">
+        <svg width="18" height="18" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.552 4.116 1.521 5.842L.057 23.633a.5.5 0 00.61.61l5.791-1.464A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.963 9.963 0 01-5.127-1.417l-.367-.218-3.804.962.975-3.763-.239-.389A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Contactez-nous
+      </a>
+    </div>
+    <div class="cta-reassurance reveal reveal-delay-4">
+      <span class="cta-reas-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Aucun compte requis pour commander
+      </span>
+      <span class="cta-reas-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        Satisfait ou remboursé 30 jours
+      </span>
+      <span class="cta-reas-item">
+        <svg width="14" height="14" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><polyline points="20 6 9 17 4 12"/></svg>
+        +2 400 clients conquis
+      </span>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ NEWSLETTER ════════════════════ -->
+<section id="newsletter">
+  <div class="container newsletter-inner">
+    <div class="newsletter-text reveal">
+      <h3>Restez dans l'élégance</h3>
+      <p>Recevez en avant-première nos nouvelles collections, offres exclusives et inspirations déco.</p>
+    </div>
+    <form class="newsletter-form reveal reveal-delay-2" action="#" method="post" aria-label="Inscription à la newsletter">
+      <label for="newsletter-email" class="sr-only">Votre adresse email</label>
+      <input class="newsletter-input" id="newsletter-email" type="email" name="email" placeholder="Votre adresse email" required autocomplete="email">
+      <button class="newsletter-submit" type="submit">S'inscrire</button>
+    </form>
+  </div>
+</section>
+
+<!-- ════════════════════ FOOTER ════════════════════ -->
+<footer role="contentinfo">
+  <div class="container">
+    <div class="footer-grid">
+      <div class="footer-brand">
+        <div class="logo-text">Oryzon Deco</div>
+        <p>Intérieurs Japandi & minimalistes à Mayotte. Mobilier, luminaires et objets de décoration naturels — livrés sur toute l'île. Commandes en DM ou sur le site.</p>
+        <div class="footer-socials">
+          <a href="https://www.instagram.com/oryzon.deco" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram Oryzon Deco">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          </a>
+          <a href="https://wa.me/33600000000" target="_blank" rel="noopener" class="social-icon" aria-label="WhatsApp Oryzon Deco">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.552 4.116 1.521 5.842L.057 23.633a.5.5 0 00.61.61l5.791-1.464A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.963 9.963 0 01-5.127-1.417l-.367-.218-3.804.962.975-3.763-.239-.389A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+          </a>
+          <a href="https://www.tiktok.com/@oryzon.deco" target="_blank" rel="noopener" class="social-icon" aria-label="TikTok Oryzon Deco">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.29 6.29 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.14 8.14 0 004.77 1.52V6.82a4.85 4.85 0 01-1-.13z"/></svg>
+          </a>
+        </div>
+      </div>
+      <nav class="footer-col" aria-label="Boutique">
+        <h4>Boutique</h4>
+        <ul>
+          <li><a href="#best-sellers">Best sellers</a></li>
+          <li><a href="#catalogue">Nouveautés</a></li>
+          <li><a href="#catalogue">Vases & Céramiques</a></li>
+          <li><a href="#catalogue">Miroirs & Cadres</a></li>
+          <li><a href="#catalogue">Bougies & Parfum</a></li>
+          <li><a href="#catalogue">Textiles</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Service client">
+        <h4>Service client</h4>
+        <ul>
+          <li><a href="#">Mon compte</a></li>
+          <li><a href="#">Suivi de commande</a></li>
+          <li><a href="#">Livraison</a></li>
+          <li><a href="#">Retours</a></li>
+          <li><a href="https://wa.me/33600000000" target="_blank" rel="noopener">WhatsApp</a></li>
+          <li><a href="mailto:contact@oryzondeco.fr">Contact</a></li>
+        </ul>
+      </nav>
+      <nav class="footer-col" aria-label="Informations légales">
+        <h4>Informations</h4>
+        <ul>
+          <li><a href="#">À propos</a></li>
+          <li><a href="#">Blog déco</a></li>
+          <li><a href="#">CGV</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
+          <li><a href="#">Mentions légales</a></li>
+          <li><a href="#">Cookies</a></li>
+        </ul>
+      </nav>
+    </div>
+    <div class="footer-bottom">
+      <p class="footer-copyright">© 2025 Oryzon Deco. Tous droits réservés.</p>
+      <a href="https://wa.me/33600000000" class="footer-wa" target="_blank" rel="noopener" aria-label="Nous contacter sur WhatsApp">
+        <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.552 4.116 1.521 5.842L.057 23.633a.5.5 0 00.61.61l5.791-1.464A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.963 9.963 0 01-5.127-1.417l-.367-.218-3.804.962.975-3.763-.239-.389A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+        Support WhatsApp 7j/7
+      </a>
+      <div class="footer-legal">
+        <a href="#">CGV</a>
+        <a href="#">Confidentialité</a>
+        <a href="#">Mentions légales</a>
+      </div>
+    </div>
+  </div>
+</footer>
+
+<!-- ════════════════════ FLOATING ELEMENTS ════════════════════ -->
+<!-- WhatsApp FAB -->
+<a href="https://wa.me/33600000000" class="wa-fab" target="_blank" rel="noopener" aria-label="Nous contacter sur WhatsApp">
+  <svg width="24" height="24" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.552 4.116 1.521 5.842L.057 23.633a.5.5 0 00.61.61l5.791-1.464A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.963 9.963 0 01-5.127-1.417l-.367-.218-3.804.962.975-3.763-.239-.389A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+  <span class="wa-tooltip" aria-hidden="true">Commandez par WhatsApp</span>
+</a>
+
+<!-- Sticky mobile CTA -->
+<div class="mobile-sticky-cta" role="complementary" aria-label="Commander maintenant">
+  <a href="#catalogue" class="btn btn-gold" style="border-radius:4px">
+    Commander maintenant
+    <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M5 12h14M12 5l7 7-7 7"/></svg>
+  </a>
+</div>
+
+<!-- ════════════════════ CART DRAWER ════════════════════ -->
+<div class="cart-overlay" id="cartOverlay" aria-hidden="true"></div>
+<div class="cart-drawer" id="cartDrawer" role="dialog" aria-modal="true" aria-label="Votre panier">
+  <div class="cart-drawer-head">
+    <h2 class="cart-drawer-title">Mon panier</h2>
+    <button class="cart-close-btn" id="cartCloseBtn" aria-label="Fermer le panier">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+  </div>
+  <div class="cart-items" id="cartItems">
+    <!-- Populated by JS -->
+  </div>
+  <div class="cart-drawer-foot" id="cartFoot" style="display:none">
+    <div class="cart-total-row">
+      <span class="cart-total-label">Total</span>
+      <span class="cart-total-value" id="cartTotal">0,00 €</span>
+    </div>
+    <button class="cart-checkout-btn" onclick="alert('Fonctionnalité de paiement à connecter via Stripe.')">
+      <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><rect x="1" y="4" width="22" height="16" rx="2"/><line x1="1" y1="10" x2="23" y2="10"/></svg>
+      Commander — paiement en ligne
+    </button>
+    <a class="cart-wa-btn" href="https://wa.me/33600000000" target="_blank" rel="noopener" id="cartWaBtn">
+      <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.552 4.116 1.521 5.842L.057 23.633a.5.5 0 00.61.61l5.791-1.464A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.963 9.963 0 01-5.127-1.417l-.367-.218-3.804.962.975-3.763-.239-.389A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+      Commander via WhatsApp
+    </a>
+    <p class="cart-note">Livraison sur toute l'île de Mayotte · Paiement sécurisé</p>
+  </div>
+</div>
+
+<!-- Add to cart feedback toast -->
+<div class="add-feedback" id="addFeedback" aria-live="polite" aria-atomic="true"></div>
+
+<!-- Newsletter Popup -->
+<div class="popup-overlay" id="popupOverlay" role="dialog" aria-modal="true" aria-labelledby="popupTitle">
+  <div class="popup-box">
+    <button class="popup-close" id="popupClose" aria-label="Fermer">
+      <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
+    </button>
+    <p class="popup-eyebrow">Offre de bienvenue</p>
+    <h3 class="popup-title" id="popupTitle">-10% sur votre<br>première commande</h3>
+    <p class="popup-text">Inscrivez-vous et recevez votre code promo exclusif + nos dernières inspirations Japandi directement dans votre boîte mail.</p>
+    <form class="popup-form" action="#" method="post" aria-label="Obtenir le code promo">
+      <label for="popup-email" class="sr-only">Votre adresse email</label>
+      <input class="popup-input" id="popup-email" type="email" name="email" placeholder="Votre adresse email" required autocomplete="email">
+      <button type="submit" class="btn btn-dark" style="width:100%;justify-content:center">Obtenir mon code -10%</button>
+      <p class="popup-disclaimer">Aucun spam. Désinscription en 1 clic.</p>
+    </form>
+  </div>
+</div>
+
+<!-- Visually hidden helper -->
+<style>.sr-only{position:absolute;width:1px;height:1px;padding:0;margin:-1px;overflow:hidden;clip:rect(0,0,0,0);white-space:nowrap;border-width:0}</style>
+
+<script>
+/* ══════════════════════════════════════════
+   ORYZON DECO — INTERACTIONS v2
+══════════════════════════════════════════ */
+
+// ── Navbar scroll
+const navbar = document.getElementById('navbar');
+const onScroll = () => navbar.classList.toggle('scrolled', window.scrollY > 60);
+window.addEventListener('scroll', onScroll, { passive: true });
+onScroll();
+
+// ── Mobile menu
+const hamburgerBtn = document.getElementById('hamburgerBtn');
+const mobileMenu   = document.getElementById('mobileMenu');
+const mobileClose  = document.getElementById('mobileClose');
+hamburgerBtn.addEventListener('click', () => {
+  const isOpen = mobileMenu.classList.toggle('open');
+  hamburgerBtn.setAttribute('aria-expanded', isOpen);
+  document.body.style.overflow = isOpen ? 'hidden' : '';
+});
+mobileClose.addEventListener('click', () => {
+  mobileMenu.classList.remove('open');
+  hamburgerBtn.setAttribute('aria-expanded','false');
+  document.body.style.overflow = '';
+});
+mobileMenu.querySelectorAll('a').forEach(a => a.addEventListener('click', () => {
+  mobileMenu.classList.remove('open');
+  hamburgerBtn.setAttribute('aria-expanded','false');
+  document.body.style.overflow = '';
+}));
+
+// ── Reveal on scroll
+const revealObserver = new IntersectionObserver(entries => {
+  entries.forEach(e => { if (e.isIntersecting) { e.target.classList.add('visible'); revealObserver.unobserve(e.target); } });
+}, { threshold: 0.1 });
+document.querySelectorAll('.reveal').forEach(el => revealObserver.observe(el));
+
+// ── Filter bar
+document.querySelectorAll('.filter-btn').forEach(btn => {
+  btn.addEventListener('click', () => {
+    document.querySelectorAll('.filter-btn').forEach(b => { b.classList.remove('active'); b.setAttribute('aria-pressed','false'); });
+    btn.classList.add('active'); btn.setAttribute('aria-pressed','true');
+  });
+});
+
+// ══════════════════════════════════════════
+// CART ENGINE
+// ══════════════════════════════════════════
+let cart = JSON.parse(sessionStorage.getItem('oryzon_cart') || '[]');
+
+const saveCart = () => sessionStorage.setItem('oryzon_cart', JSON.stringify(cart));
+
+const formatPrice = p => p.toFixed(2).replace('.', ',') + ' €';
+
+function getCartTotal() {
+  return cart.reduce((s, i) => s + i.price * i.qty, 0);
+}
+
+function updateCartCount() {
+  const total = cart.reduce((s, i) => s + i.qty, 0);
+  document.querySelectorAll('.cart-count').forEach(el => {
+    el.textContent = total;
+    el.style.display = total > 0 ? 'flex' : 'none';
+  });
+}
+
+function renderCart() {
+  const el = document.getElementById('cartItems');
+  const foot = document.getElementById('cartFoot');
+  const totalEl = document.getElementById('cartTotal');
+  if (cart.length === 0) {
+    el.innerHTML = `
+      <div class="cart-empty">
+        <svg class="cart-empty-icon" width="56" height="56" fill="none" stroke="currentColor" stroke-width="1.2" viewBox="0 0 24 24"><path d="M6 2L3 6v14a2 2 0 002 2h14a2 2 0 002-2V6l-3-4z"/><line x1="3" y1="6" x2="21" y2="6"/><path d="M16 10a4 4 0 01-8 0"/></svg>
+        <p>Votre panier est vide</p>
+        <a href="#best-sellers" onclick="closeCart()" style="font-size:.75rem;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--black);text-decoration:underline;text-underline-offset:3px">Découvrir la collection</a>
+      </div>`;
+    foot.style.display = 'none';
+    return;
+  }
+  foot.style.display = 'block';
+  totalEl.textContent = formatPrice(getCartTotal());
+  // Build WhatsApp message
+  const waMsg = encodeURIComponent('Bonjour Oryzon Deco ! Je souhaite commander :\n' +
+    cart.map(i => `- ${i.name} x${i.qty} — ${formatPrice(i.price * i.qty)}`).join('\n') +
+    `\nTotal : ${formatPrice(getCartTotal())}`);
+  document.getElementById('cartWaBtn').href = `https://wa.me/33600000000?text=${waMsg}`;
+  el.innerHTML = cart.map((item, idx) => `
+    <div class="cart-item" data-idx="${idx}">
+      <img class="cart-item-img" src="${item.img}" alt="${item.name}" loading="lazy">
+      <div class="cart-item-info">
+        <p class="cart-item-cat">${item.cat}</p>
+        <p class="cart-item-name">${item.name}</p>
+        <p class="cart-item-price">${formatPrice(item.price)}</p>
+        <div class="cart-item-controls">
+          <button class="qty-btn" onclick="changeQty(${idx},-1)" aria-label="Diminuer">−</button>
+          <span class="qty-value">${item.qty}</span>
+          <button class="qty-btn" onclick="changeQty(${idx},1)" aria-label="Augmenter">+</button>
+          <button class="cart-item-remove" onclick="removeItem(${idx})" aria-label="Supprimer ${item.name}">
+            <svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><polyline points="3 6 5 6 21 6"/><path d="M19 6l-1 14a2 2 0 01-2 2H8a2 2 0 01-2-2L5 6"/><path d="M10 11v6M14 11v6"/><path d="M9 6V4h6v2"/></svg>
+          </button>
+        </div>
+      </div>
+    </div>`).join('');
+}
+
+function changeQty(idx, delta) {
+  cart[idx].qty += delta;
+  if (cart[idx].qty <= 0) cart.splice(idx, 1);
+  saveCart(); updateCartCount(); renderCart();
+}
+function removeItem(idx) {
+  cart.splice(idx, 1);
+  saveCart(); updateCartCount(); renderCart();
+}
+
+function openCart() {
+  document.getElementById('cartDrawer').classList.add('open');
+  document.getElementById('cartOverlay').classList.add('open');
+  document.getElementById('cartOverlay').setAttribute('aria-hidden','false');
+  document.body.style.overflow = 'hidden';
+  renderCart();
+}
+function closeCart() {
+  document.getElementById('cartDrawer').classList.remove('open');
+  document.getElementById('cartOverlay').classList.remove('open');
+  document.getElementById('cartOverlay').setAttribute('aria-hidden','true');
+  document.body.style.overflow = '';
+}
+
+document.getElementById('cartCloseBtn').addEventListener('click', closeCart);
+document.getElementById('cartOverlay').addEventListener('click', closeCart);
+
+// Open cart on nav cart icon click
+document.querySelectorAll('.nav-icon-btn').forEach(btn => {
+  if (btn.getAttribute('aria-label')?.includes('Panier') || btn.getAttribute('aria-label')?.includes('panier')) {
+    btn.addEventListener('click', openCart);
+  }
+});
+
+// ── Add to cart from product cards
+function showFeedback(name) {
+  const fb = document.getElementById('addFeedback');
+  fb.textContent = `✓ ${name} ajouté au panier`;
+  fb.classList.add('show');
+  setTimeout(() => fb.classList.remove('show'), 2200);
+}
+
+document.querySelectorAll('.product-add-cart').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const card   = btn.closest('.product-card');
+    const name   = card.querySelector('.product-name')?.textContent?.trim() || 'Produit';
+    const cat    = card.querySelector('.product-category')?.textContent?.trim() || '';
+    const priceStr = card.querySelector('.product-price')?.textContent?.replace(/[^\d,]/g,'').replace(',','.') || '0';
+    const price  = parseFloat(priceStr) || 0;
+    const img    = card.querySelector('img')?.src || '';
+    const existing = cart.find(i => i.name === name);
+    if (existing) { existing.qty++; }
+    else { cart.push({ name, cat, price, img, qty: 1 }); }
+    saveCart(); updateCartCount(); showFeedback(name);
+  });
+});
+
+// Init cart count on load
+updateCartCount();
+
+// ── Wishlist toggle
+document.querySelectorAll('.product-wishlist').forEach(btn => {
+  btn.addEventListener('click', (e) => {
+    e.stopPropagation();
+    const active = btn.getAttribute('aria-pressed') === 'true';
+    btn.setAttribute('aria-pressed', String(!active));
+    btn.style.background = active ? '' : 'var(--gold)';
+    btn.style.color = active ? '' : 'var(--black)';
+  });
+});
+
+// ── Catalogue keyboard a11y
+document.querySelectorAll('.cat-item[role="button"]').forEach(item => {
+  item.addEventListener('keydown', (e) => { if (e.key==='Enter'||e.key===' ') { e.preventDefault(); item.click(); } });
+});
+
+// ── Mobile sticky hide on scroll down
+let lastY = 0;
+const stickyCta = document.querySelector('.mobile-sticky-cta');
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (stickyCta) stickyCta.style.transform = y > lastY && y > 300 ? 'translateY(100%)' : 'translateY(0)';
+  lastY = y;
+}, { passive: true });
+
+// ── Newsletter popup
+const popupOverlay = document.getElementById('popupOverlay');
+const popupClose   = document.getElementById('popupClose');
+let popupShown = false;
+const showPopup = () => {
+  if (popupShown || sessionStorage.getItem('oryzon_popup')) return;
+  popupShown = true;
+  popupOverlay.classList.add('open');
+  document.body.style.overflow = 'hidden';
+};
+setTimeout(showPopup, 7000);
+document.addEventListener('mouseleave', e => { if (e.clientY < 10) showPopup(); });
+popupClose.addEventListener('click', () => {
+  popupOverlay.classList.remove('open');
+  document.body.style.overflow = '';
+  sessionStorage.setItem('oryzon_popup','1');
+});
+popupOverlay.addEventListener('click', e => {
+  if (e.target === popupOverlay) {
+    popupOverlay.classList.remove('open');
+    document.body.style.overflow = '';
+    sessionStorage.setItem('oryzon_popup','1');
+  }
+});
+</script>
+</body>
+</html>

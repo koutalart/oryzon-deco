@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<meta name="description" content="Oryzon Deco — Mobilier & décoration Japandi premium à Mayotte. Transformez votre intérieur avec nos collections minimalistes et naturelles.">
-<title>Oryzon Deco — Mobilier & Déco Japandi | Mayotte</title>
+<meta name="description" content="ORyZOn.deco — Aménagement, décoration intérieure et mobilier premium à Mayotte. L'art de sublimer vos espaces de vie. Design minimaliste, naturel et chaleureux.">
+<title>ORyZOn.deco — Décoration & Mobilier Premium | Mayotte</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Cormorant:ital,wght@0,300;0,400;0,500;0,600;0,700;1,400;1,500&family=Montserrat:wght@300;400;500;600;700&display=swap" rel="stylesheet">
@@ -951,6 +951,174 @@ footer {
     transition-duration: 0.15ms !important;
   }
 }
+
+/* ══════════════════════════════════════════
+   À PROPOS
+══════════════════════════════════════════ */
+#a-propos { background: var(--beige); overflow: hidden; }
+.apropos-inner {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 5rem; align-items: center;
+}
+.apropos-img-wrap {
+  position: relative; border-radius: 2px; overflow: hidden;
+  aspect-ratio: 4/5;
+}
+.apropos-img-wrap img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.8s ease;
+}
+.apropos-img-wrap:hover img { transform: scale(1.04); }
+.apropos-img-accent {
+  position: absolute; bottom: -1px; left: -1px; right: -1px;
+  height: 120px;
+  background: linear-gradient(to top, var(--beige), transparent);
+}
+.apropos-tag {
+  display: inline-block; padding: 0.3rem 1rem;
+  background: var(--sand); border-radius: 100px;
+  font-size: 0.68rem; font-weight: 600; letter-spacing: 0.15em;
+  text-transform: uppercase; color: var(--gold); margin-bottom: 2rem;
+}
+.apropos-values {
+  display: grid; grid-template-columns: 1fr 1fr;
+  gap: 1.2rem; margin-top: 2.5rem;
+}
+.apropos-value {
+  padding: 1.2rem; background: var(--white);
+  border-radius: 2px; border-left: 2px solid var(--gold);
+}
+.apropos-value-title {
+  font-size: 0.75rem; font-weight: 700; letter-spacing: 0.1em;
+  text-transform: uppercase; color: var(--black); margin-bottom: 0.3rem;
+}
+.apropos-value-text { font-size: 0.78rem; color: var(--gray); line-height: 1.6; }
+
+@media (max-width: 768px) {
+  .apropos-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .apropos-img-wrap { aspect-ratio: 16/9; }
+  .apropos-values { grid-template-columns: 1fr 1fr; gap: 0.8rem; }
+}
+@media (max-width: 480px) {
+  .apropos-values { grid-template-columns: 1fr; }
+}
+
+/* ══════════════════════════════════════════
+   INSPIRATIONS
+══════════════════════════════════════════ */
+#inspirations { background: var(--white); }
+.inspi-grid {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  grid-template-rows: auto auto;
+  gap: 1rem; margin-top: 3rem;
+}
+.inspi-item {
+  position: relative; overflow: hidden; border-radius: 2px;
+  cursor: pointer;
+}
+.inspi-item:first-child {
+  grid-column: 1 / 2; grid-row: 1 / 3;
+}
+.inspi-item img {
+  width: 100%; height: 100%; object-fit: cover;
+  transition: transform 0.6s ease;
+  display: block;
+}
+.inspi-item:first-child img { min-height: 480px; }
+.inspi-item:not(:first-child) img { min-height: 220px; }
+.inspi-item:hover img { transform: scale(1.06); }
+.inspi-overlay {
+  position: absolute; inset: 0;
+  background: linear-gradient(to top, rgba(30,23,16,.75) 0%, transparent 50%);
+  display: flex; flex-direction: column; justify-content: flex-end;
+  padding: 1.5rem; opacity: 0; transition: var(--trans);
+}
+.inspi-item:hover .inspi-overlay { opacity: 1; }
+.inspi-label {
+  font-family: 'Cormorant', serif; font-size: 1.3rem; font-weight: 500;
+  color: var(--white); margin-bottom: 0.25rem;
+}
+.inspi-sub { font-size: 0.7rem; color: rgba(255,255,255,.65); letter-spacing: 0.1em; text-transform: uppercase; }
+
+@media (max-width: 768px) {
+  .inspi-grid { grid-template-columns: repeat(2, 1fr); }
+  .inspi-item:first-child { grid-column: 1 / 3; grid-row: auto; }
+  .inspi-item:first-child img { min-height: 260px; }
+  .inspi-overlay { opacity: 1; }
+}
+@media (max-width: 480px) {
+  .inspi-grid { grid-template-columns: 1fr; }
+  .inspi-item:first-child { grid-column: auto; }
+}
+
+/* ══════════════════════════════════════════
+   CONTACT
+══════════════════════════════════════════ */
+#contact { background: var(--beige); }
+.contact-inner {
+  display: grid; grid-template-columns: 1fr 1.3fr;
+  gap: 5rem; align-items: start;
+}
+.contact-channels { display: flex; flex-direction: column; gap: 1.2rem; margin-top: 2rem; }
+.contact-channel {
+  display: flex; align-items: center; gap: 1rem;
+  padding: 1.1rem 1.4rem; background: var(--white);
+  border-radius: 2px; text-decoration: none; color: var(--black);
+  transition: var(--trans); border: 1px solid transparent;
+}
+.contact-channel:hover { border-color: var(--gold); transform: translateX(4px); }
+.contact-channel-icon {
+  width: 42px; height: 42px; border-radius: 50%; flex-shrink: 0;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+}
+.ch-wa { background: #25D366; color: #fff; }
+.ch-ig { background: linear-gradient(135deg,#f09433,#e6683c,#dc2743,#cc2366,#bc1888); color:#fff; }
+.ch-sc { background: #FFFC00; color: #000; }
+.ch-mail { background: var(--slate); color: #fff; }
+.contact-channel-info strong {
+  display: block; font-size: 0.8rem; font-weight: 700; letter-spacing: 0.05em;
+}
+.contact-channel-info span { font-size: 0.72rem; color: var(--gray); }
+
+.contact-form-wrap {
+  background: var(--white); padding: 2.5rem;
+  border-radius: 2px;
+}
+.contact-form-title {
+  font-family: 'Cormorant', serif; font-size: 1.8rem; font-weight: 500;
+  margin-bottom: 1.8rem; color: var(--black);
+}
+.form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+.form-group { display: flex; flex-direction: column; gap: 0.4rem; margin-bottom: 1rem; }
+.form-group.full { grid-column: 1 / -1; }
+.form-label {
+  font-size: 0.7rem; font-weight: 600; letter-spacing: 0.12em;
+  text-transform: uppercase; color: var(--dark);
+}
+.form-input, .form-textarea {
+  padding: 0.85rem 1rem; border: 1.5px solid var(--sand);
+  background: var(--beige); border-radius: 2px;
+  font-family: 'Montserrat', sans-serif; font-size: 0.85rem;
+  color: var(--black); outline: none; transition: border-color 0.25s;
+}
+.form-input:focus, .form-textarea:focus { border-color: var(--gold); background: var(--white); }
+.form-textarea { resize: vertical; min-height: 130px; }
+.form-submit {
+  width: 100%; padding: 1rem; background: var(--black); color: var(--white);
+  font-family: 'Montserrat', sans-serif; font-size: 0.75rem; font-weight: 700;
+  letter-spacing: 0.18em; text-transform: uppercase; border: none;
+  border-radius: 2px; cursor: pointer; transition: var(--trans);
+  margin-top: 0.5rem;
+}
+.form-submit:hover { background: var(--dark); transform: translateY(-2px); box-shadow: 0 8px 24px rgba(0,0,0,.2); }
+
+@media (max-width: 768px) {
+  .contact-inner { grid-template-columns: 1fr; gap: 2.5rem; }
+  .form-row { grid-template-columns: 1fr; }
+  .contact-form-wrap { padding: 1.8rem; }
+}
 </style>
 </head>
 <body>
@@ -958,13 +1126,12 @@ footer {
 <!-- ════════════════════ NAVBAR ════════════════════ -->
 <nav id="navbar" aria-label="Navigation principale">
   <div class="container nav-inner">
-    <a href="#" class="nav-logo" aria-label="Oryzon Deco — Accueil">Oryzon Deco</a>
+    <a href="#" class="nav-logo" aria-label="ORyZOn.deco — Accueil">ORyZOn.deco</a>
     <ul class="nav-links" role="list">
+      <li><a href="#a-propos">À propos</a></li>
       <li><a href="#best-sellers">Collections</a></li>
-      <li><a href="#catalogue">Catalogue</a></li>
-      <li><a href="#why-us">À propos</a></li>
-      <li><a href="#testimonials">Avis</a></li>
-      <li><a href="#newsletter">Contact</a></li>
+      <li><a href="#inspirations">Inspirations</a></li>
+      <li><a href="#contact">Contact</a></li>
     </ul>
     <div class="nav-actions">
       <button class="nav-icon-btn" aria-label="Rechercher">
@@ -990,12 +1157,11 @@ footer {
   <button class="mobile-close" id="mobileClose" aria-label="Fermer le menu">
     <svg width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.6" viewBox="0 0 24 24"><line x1="18" y1="6" x2="6" y2="18"/><line x1="6" y1="6" x2="18" y2="18"/></svg>
   </button>
+  <a href="#a-propos">À propos</a>
   <a href="#best-sellers">Collections</a>
-  <a href="#catalogue">Catalogue</a>
-  <a href="#why-us">Notre histoire</a>
-  <a href="#testimonials">Avis clients</a>
-  <a href="#newsletter">Contact</a>
-  <a href="#commander" class="btn btn-gold" style="font-size:.8rem">Commander maintenant</a>
+  <a href="#inspirations">Inspirations</a>
+  <a href="#contact">Contact</a>
+  <a href="https://wa.me/262639606391" class="btn btn-gold" style="font-size:.8rem" target="_blank" rel="noopener">Nous contacter</a>
 </div>
 
 <!-- ════════════════════ HERO ════════════════════ -->
@@ -1011,14 +1177,13 @@ footer {
     <div class="hero-line hero-line-h hero-line-4" aria-hidden="true"></div>
   </div>
   <div class="container hero-content">
-    <p class="hero-eyebrow" aria-label="Style Japandi — Mayotte">Style Japandi · Mayotte</p>
+    <p class="hero-eyebrow" aria-label="Décoration & Mobilier Premium — Mayotte">Décoration & Mobilier · Mayotte</p>
     <h1 class="hero-title">
-      Intérieurs<br>
-      minimalistes &<br>
-      <em>naturellement beaux</em>
+      L'art de sublimer<br>
+      <em>vos espaces de vie</em>
     </h1>
     <p class="hero-subtitle">
-      Mobilier, luminaires et objets de décoration dans l'esprit Japandi — cette fusion zen du design japonais et scandinave. Livraison sur toute l'île de Mayotte.
+      Mobilier, luminaires et objets de décoration aux matières naturelles, aux couleurs douces et aux lignes épurées. Livrés sur toute l'île de Mayotte.
     </p>
     <div class="hero-ctas">
       <a href="#catalogue" class="btn btn-gold">
@@ -1045,6 +1210,48 @@ footer {
   <div class="hero-scroll" aria-hidden="true">
     <div class="scroll-line"></div>
     <span>Découvrir</span>
+  </div>
+</section>
+
+<!-- ════════════════════ À PROPOS ════════════════════ -->
+<section id="a-propos" class="section-pad" aria-labelledby="apropos-title">
+  <div class="container">
+    <div class="apropos-inner">
+      <div class="apropos-img-wrap reveal">
+        <img src="https://images.unsplash.com/photo-1586023492125-27b2c045efd7?w=800&h=1000&fit=crop&q=85" alt="Intérieur naturel et chaleureux ORyZOn.deco" loading="lazy">
+        <div class="apropos-img-accent" aria-hidden="true"></div>
+      </div>
+      <div class="apropos-text">
+        <span class="apropos-tag reveal">Notre vision</span>
+        <h2 class="section-title reveal" id="apropos-title">
+          Une identité<br><em style="font-style:italic;color:var(--gold)">naturelle & élégante</em>
+        </h2>
+        <p class="reveal reveal-delay-1" style="margin-top:1.5rem">
+          ORyZOn.deco est né d'une passion pour les espaces qui respirent — des intérieurs où chaque pièce a été choisie pour sa beauté, ses matières et son harmonie avec l'environnement.
+        </p>
+        <p class="reveal reveal-delay-2" style="margin-top:1rem">
+          Notre univers s'articule autour de matières naturelles, de couleurs douces et d'espaces épurés. Une esthétique chaleureuse et intemporelle, pensée pour sublimer votre quotidien à Mayotte.
+        </p>
+        <div class="apropos-values reveal reveal-delay-3">
+          <div class="apropos-value">
+            <div class="apropos-value-title">Matières nobles</div>
+            <div class="apropos-value-text">Bois, rotin, lin, céramique — des matériaux qui vieillissent avec grâce.</div>
+          </div>
+          <div class="apropos-value">
+            <div class="apropos-value-title">Design épuré</div>
+            <div class="apropos-value-text">Des lignes simples, des espaces qui respirent, sans surcharge visuelle.</div>
+          </div>
+          <div class="apropos-value">
+            <div class="apropos-value-title">Ambiance apaisante</div>
+            <div class="apropos-value-text">Couleurs douces, lumière naturelle, atmosphère calme et élégante.</div>
+          </div>
+          <div class="apropos-value">
+            <div class="apropos-value-title">Ancrage local</div>
+            <div class="apropos-value-text">Conçu pour Mayotte, livré sur toute l'île, avec un service proche.</div>
+          </div>
+        </div>
+      </div>
+    </div>
   </div>
 </section>
 
@@ -1222,13 +1429,13 @@ footer {
           <img src="https://images.unsplash.com/photo-1778088442792-29c430a4c93f?w=600&h=800&fit=crop&q=80" alt="Canapé sectionnel en lin naturel beige — Oryzon Deco" loading="lazy">
           <span class="product-badge badge-trend">N°1 Vente</span>
           <div class="product-actions">
-            <button class="product-add-cart" aria-label="Ajouter Canapé Lin Japandi au panier">Ajouter au panier</button>
+            <button class="product-add-cart" aria-label="Ajouter Canapé Lin Naturel au panier">Ajouter au panier</button>
             <button class="product-wishlist" aria-label="Ajouter aux favoris"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="1.8" viewBox="0 0 24 24"><path d="M20.84 4.61a5.5 5.5 0 00-7.78 0L12 5.67l-1.06-1.06a5.5 5.5 0 00-7.78 7.78l1.06 1.06L12 21.23l7.78-7.78 1.06-1.06a5.5 5.5 0 000-7.78z"/></svg></button>
           </div>
         </div>
         <div class="product-info">
           <p class="product-category">Mobilier Salon</p>
-          <h3 class="product-name">Canapé Lin Japandi</h3>
+          <h3 class="product-name">Canapé Lin Naturel</h3>
           <div class="product-price-row"><span class="product-price">549,00 €</span></div>
           <div class="product-rating" aria-label="5 étoiles sur 5">
             <span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span><span class="star" aria-hidden="true">★</span>
@@ -1370,7 +1577,7 @@ footer {
       </div>
       <div class="testimonial-card" role="listitem">
         <div class="testi-stars" aria-label="5 étoiles"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
-        <p class="testi-text">"Commande passée un soir sur WhatsApp, livrée le lendemain à Sada. L'ambiance Japandi de mon intérieur est exactement ce que je voulais."</p>
+        <p class="testi-text">"Commande passée un soir sur WhatsApp, livrée le lendemain à Sada. L'ambiance naturelle et épurée de mon intérieur est exactement ce que je voulais."</p>
         <div class="testi-author">
           <div class="testi-avatar" aria-hidden="true">H</div>
           <div><p class="testi-name">Houmeyda Oubeidillah</p><p class="testi-location">Sada, Mayotte</p></div>
@@ -1417,7 +1624,7 @@ footer {
       </div>
       <div class="testimonial-card" role="listitem" aria-hidden="true">
         <div class="testi-stars"><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span><span class="star">★</span></div>
-        <p class="testi-text">"Commande passée un soir sur WhatsApp, livrée le lendemain à Sada. L'ambiance Japandi de mon intérieur est exactement ce que je voulais."</p>
+        <p class="testi-text">"Commande passée un soir sur WhatsApp, livrée le lendemain à Sada. L'ambiance naturelle et épurée de mon intérieur est exactement ce que je voulais."</p>
         <div class="testi-author"><div class="testi-avatar">H</div><div><p class="testi-name">Houmeyda Oubeidillah</p><p class="testi-location">Sada, Mayotte</p></div></div>
       </div>
       <div class="testimonial-card" role="listitem" aria-hidden="true">
@@ -1439,54 +1646,112 @@ footer {
     </div>
     <div class="filter-bar reveal" role="group" aria-label="Filtrer par catégorie">
       <button class="filter-btn active" data-filter="all" aria-pressed="true">Tout voir</button>
-      <button class="filter-btn" data-filter="salon" aria-pressed="false">Salon & Mobilier</button>
-      <button class="filter-btn" data-filter="luminaires" aria-pressed="false">Luminaires</button>
+      <button class="filter-btn" data-filter="salon" aria-pressed="false">Salon</button>
       <button class="filter-btn" data-filter="chambre" aria-pressed="false">Chambre</button>
-      <button class="filter-btn" data-filter="bain" aria-pressed="false">Salle de Bain</button>
-      <button class="filter-btn" data-filter="vases" aria-pressed="false">Vases & Céramiques</button>
-      <button class="filter-btn" data-filter="textiles" aria-pressed="false">Tapis & Textiles</button>
+      <button class="filter-btn" data-filter="manger" aria-pressed="false">Salle à manger</button>
+      <button class="filter-btn" data-filter="deco" aria-pressed="false">Décoration</button>
+      <button class="filter-btn" data-filter="bain" aria-pressed="false">Salle de bain</button>
+      <button class="filter-btn" data-filter="exterieur" aria-pressed="false">Extérieur</button>
     </div>
     <div class="catalogue-grid reveal">
-      <div class="cat-item" data-category="salon" tabindex="0" role="button" aria-label="Explorer Mobilier Salon">
-        <img class="cat-real-img" src="https://plus.unsplash.com/premium_photo-1724013063111-fbca04cd9c63?w=600&h=600&fit=crop&q=80" alt="Salon Japandi minimaliste" loading="lazy">
+      <div class="cat-item" data-category="salon" tabindex="0" role="button" aria-label="Explorer Salon">
+        <img class="cat-real-img" src="https://plus.unsplash.com/premium_photo-1724013063111-fbca04cd9c63?w=600&h=600&fit=crop&q=80" alt="Salon minimaliste naturel" loading="lazy">
         <div class="cat-overlay">
-          <p class="cat-name">Salon & Mobilier</p>
-          <p class="cat-count">28 produits</p>
+          <p class="cat-name">Salon</p>
+          <p class="cat-count">28 pièces</p>
         </div>
       </div>
-      <div class="cat-item" data-category="luminaires" tabindex="0" role="button" aria-label="Explorer Luminaires">
-        <img class="cat-real-img" src="https://images.unsplash.com/photo-1643509877015-c90830bb8519?w=600&h=600&fit=crop&q=80" alt="Luminaire en osier naturel" loading="lazy">
+      <div class="cat-item" data-category="chambre" tabindex="0" role="button" aria-label="Explorer Chambre">
+        <img class="cat-real-img" src="https://images.unsplash.com/photo-1699869653495-fe26f4c70b3e?w=600&h=600&fit=crop&q=80" alt="Chambre épurée et naturelle" loading="lazy">
         <div class="cat-overlay">
-          <p class="cat-name">Luminaires</p>
-          <p class="cat-count">19 produits</p>
+          <p class="cat-name">Chambre</p>
+          <p class="cat-count">22 pièces</p>
         </div>
       </div>
-      <div class="cat-item" data-category="bain" tabindex="0" role="button" aria-label="Explorer Salle de Bain">
-        <img class="cat-real-img" src="https://plus.unsplash.com/premium_photo-1676319481666-1d558d578fab?w=600&h=600&fit=crop&q=80" alt="Salle de bain design naturel" loading="lazy">
+      <div class="cat-item" data-category="manger" tabindex="0" role="button" aria-label="Explorer Salle à manger">
+        <img class="cat-real-img" src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=600&h=600&fit=crop&q=80" alt="Salle à manger bois naturel" loading="lazy">
         <div class="cat-overlay">
-          <p class="cat-name">Salle de Bain</p>
-          <p class="cat-count">14 produits</p>
+          <p class="cat-name">Salle à manger</p>
+          <p class="cat-count">16 pièces</p>
         </div>
       </div>
-      <div class="cat-item" data-category="chambre" tabindex="0" role="button" aria-label="Explorer Chambre & Literie">
-        <img class="cat-real-img" src="https://images.unsplash.com/photo-1699869653495-fe26f4c70b3e?w=600&h=600&fit=crop&q=80" alt="Chambre minimaliste miroir rond" loading="lazy">
+      <div class="cat-item" data-category="deco" tabindex="0" role="button" aria-label="Explorer Décoration">
+        <img class="cat-real-img" src="https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?w=600&h=600&fit=crop&q=80" alt="Objets de décoration naturels" loading="lazy">
         <div class="cat-overlay">
-          <p class="cat-name">Chambre & Literie</p>
-          <p class="cat-count">22 produits</p>
+          <p class="cat-name">Décoration</p>
+          <p class="cat-count">34 pièces</p>
         </div>
       </div>
-      <div class="cat-item" data-category="vases" tabindex="0" role="button" aria-label="Explorer Vases & Céramiques">
-        <img class="cat-real-img" src="https://images.unsplash.com/photo-1612196808214-b8e1d6145a8c?w=600&h=600&fit=crop&q=80" alt="Vases céramique sur bois" loading="lazy">
+      <div class="cat-item" data-category="bain" tabindex="0" role="button" aria-label="Explorer Salle de bain">
+        <img class="cat-real-img" src="https://plus.unsplash.com/premium_photo-1676319481666-1d558d578fab?w=600&h=600&fit=crop&q=80" alt="Salle de bain naturelle et apaisante" loading="lazy">
         <div class="cat-overlay">
-          <p class="cat-name">Vases & Céramiques</p>
-          <p class="cat-count">24 produits</p>
+          <p class="cat-name">Salle de bain</p>
+          <p class="cat-count">14 pièces</p>
         </div>
       </div>
-      <div class="cat-item" data-category="textiles" tabindex="0" role="button" aria-label="Explorer Tapis & Textiles">
-        <img class="cat-real-img" src="https://images.unsplash.com/photo-1778088442792-29c430a4c93f?w=600&h=600&fit=crop&q=80" alt="Canapé beige avec tapis naturel" loading="lazy">
+      <div class="cat-item" data-category="exterieur" tabindex="0" role="button" aria-label="Explorer Extérieur">
+        <img class="cat-real-img" src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=600&h=600&fit=crop&q=80" alt="Terrasse extérieure design" loading="lazy">
         <div class="cat-overlay">
-          <p class="cat-name">Tapis & Textiles</p>
-          <p class="cat-count">33 produits</p>
+          <p class="cat-name">Extérieur</p>
+          <p class="cat-count">12 pièces</p>
+        </div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ════════════════════ INSPIRATIONS ════════════════════ -->
+<section id="inspirations" class="section-pad" aria-labelledby="inspi-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Moodboards</span>
+      <h2 class="section-title" id="inspi-title">Nos inspirations</h2>
+      <p style="max-width:520px;margin:1rem auto 0;text-align:center;font-size:.88rem;color:var(--gray)">
+        Associations de matières, ambiances et espaces épurés — laissez-vous inspirer pour transformer votre intérieur.
+      </p>
+      <div class="section-line"></div>
+    </div>
+    <div class="inspi-grid reveal">
+      <div class="inspi-item">
+        <img src="https://images.unsplash.com/photo-1600121848594-d8644e57abab?w=700&h=900&fit=crop&q=85" alt="Salon lumineux aux tons naturels" loading="lazy">
+        <div class="inspi-overlay">
+          <p class="inspi-label">Salon</p>
+          <p class="inspi-sub">Élégance & confort</p>
+        </div>
+      </div>
+      <div class="inspi-item">
+        <img src="https://images.unsplash.com/photo-1611095973763-414019e72400?w=700&h=420&fit=crop&q=85" alt="Chambre sereine et épurée" loading="lazy">
+        <div class="inspi-overlay">
+          <p class="inspi-label">Chambre</p>
+          <p class="inspi-sub">Sérénité & repos</p>
+        </div>
+      </div>
+      <div class="inspi-item">
+        <img src="https://images.unsplash.com/photo-1617806118233-18e1de247200?w=700&h=420&fit=crop&q=85" alt="Salle à manger bois et lumière" loading="lazy">
+        <div class="inspi-overlay">
+          <p class="inspi-label">Salle à manger</p>
+          <p class="inspi-sub">Partage & chaleur</p>
+        </div>
+      </div>
+      <div class="inspi-item">
+        <img src="https://images.unsplash.com/photo-1578500351865-d6c3706f46bc?w=700&h=420&fit=crop&q=85" alt="Objets déco textures naturelles" loading="lazy">
+        <div class="inspi-overlay">
+          <p class="inspi-label">Décoration</p>
+          <p class="inspi-sub">Matières & textures</p>
+        </div>
+      </div>
+      <div class="inspi-item">
+        <img src="https://plus.unsplash.com/premium_photo-1676319481666-1d558d578fab?w=700&h=420&fit=crop&q=85" alt="Salle de bain naturelle et épurée" loading="lazy">
+        <div class="inspi-overlay">
+          <p class="inspi-label">Salle de bain</p>
+          <p class="inspi-sub">Pureté & bien-être</p>
+        </div>
+      </div>
+      <div class="inspi-item">
+        <img src="https://images.unsplash.com/photo-1600585154526-990dced4db0d?w=700&h=420&fit=crop&q=85" alt="Terrasse extérieure aménagée" loading="lazy">
+        <div class="inspi-overlay">
+          <p class="inspi-label">Extérieur</p>
+          <p class="inspi-sub">Nature & plein air</p>
         </div>
       </div>
     </div>
@@ -1542,13 +1807,96 @@ footer {
   </div>
 </section>
 
+<!-- ════════════════════ CONTACT ════════════════════ -->
+<section id="contact" class="section-pad" aria-labelledby="contact-title">
+  <div class="container">
+    <div class="section-header reveal">
+      <span class="section-eyebrow">Nous joindre</span>
+      <h2 class="section-title" id="contact-title">Contactez-nous</h2>
+      <div class="section-line"></div>
+    </div>
+    <div class="contact-inner">
+      <!-- Canaux de contact -->
+      <div class="reveal">
+        <h3 style="font-family:'Cormorant',serif;font-size:1.6rem;font-weight:500;margin-bottom:.75rem">Parlons de votre projet</h3>
+        <p style="font-size:.88rem;color:var(--gray);line-height:1.8;margin-bottom:.5rem">
+          Notre équipe est disponible tous les jours pour vous conseiller, répondre à vos questions et vous aider à créer l'intérieur de vos rêves.
+        </p>
+        <div class="contact-channels">
+          <a href="https://wa.me/262639606391" target="_blank" rel="noopener" class="contact-channel" aria-label="Nous contacter sur WhatsApp">
+            <div class="contact-channel-icon ch-wa">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.552 4.116 1.521 5.842L.057 23.633a.5.5 0 00.61.61l5.791-1.464A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.963 9.963 0 01-5.127-1.417l-.367-.218-3.804.962.975-3.763-.239-.389A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
+            </div>
+            <div class="contact-channel-info">
+              <strong>WhatsApp</strong>
+              <span>+262 639 60 63 91 · Réponse rapide 7j/7</span>
+            </div>
+          </a>
+          <a href="https://www.instagram.com/oryzon.deco" target="_blank" rel="noopener" class="contact-channel" aria-label="Nous suivre sur Instagram">
+            <div class="contact-channel-icon ch-ig">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+            </div>
+            <div class="contact-channel-info">
+              <strong>Instagram</strong>
+              <span>@oryzon.deco · Collections & inspirations</span>
+            </div>
+          </a>
+          <a href="https://snapchat.com/add/oryzon.deco" target="_blank" rel="noopener" class="contact-channel" aria-label="Nous suivre sur Snapchat">
+            <div class="contact-channel-icon ch-sc">
+              <svg width="20" height="20" fill="currentColor" viewBox="0 0 24 24"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.016.25c-.008.12.122.19.199.14.249-.157.74-.195 1.223-.195.144 0 .28.028.4.095.415.232.419.974.247 1.28-.172.307-1.188.698-1.738.727-.09.005-.128.063-.162.187-.032.116-.062.285-.115.51-.053.224-.082.39-.11.526-.02.098.009.176.068.226 1.01.84 1.924 1.647 2.037 2.73.114 1.082-.6 2.044-1.723 2.44-.36.127-.793.244-1.333.327-.253.04-.403.11-.495.256-.222.355-.4 1.176-.594 1.658-.122.302-.294.47-.487.47-.164 0-.347-.083-.553-.247-.553-.44-1.158-.595-2.073-.595-.91 0-1.567.152-2.12.599-.207.163-.39.246-.554.246-.192 0-.366-.168-.488-.47-.195-.483-.372-1.304-.594-1.659-.093-.145-.243-.215-.496-.256-.54-.082-.973-.2-1.333-.327-1.122-.396-1.837-1.358-1.723-2.44.114-1.083 1.027-1.89 2.038-2.73.058-.05.087-.128.067-.226-.028-.135-.057-.302-.11-.526-.053-.224-.083-.394-.115-.51-.034-.124-.073-.183-.163-.188-.55-.029-1.565-.42-1.737-.726-.172-.306-.168-1.048.247-1.28.12-.067.255-.095.4-.095.483 0 .974.038 1.223.195.076.05.206-.02.199-.14l-.016-.25c-.104-1.628-.23-3.654.3-4.847C7.857 1.07 11.214.793 12.206.793z"/></svg>
+            </div>
+            <div class="contact-channel-info">
+              <strong>Snapchat</strong>
+              <span>oryzon.deco · Coulisses & exclusivités</span>
+            </div>
+          </a>
+          <a href="mailto:contact@oryzondeco.fr" class="contact-channel" aria-label="Nous envoyer un email">
+            <div class="contact-channel-icon ch-mail">
+              <svg width="20" height="20" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24"><path d="M4 4h16c1.1 0 2 .9 2 2v12c0 1.1-.9 2-2 2H4c-1.1 0-2-.9-2-2V6c0-1.1.9-2 2-2z"/><polyline points="22,6 12,13 2,6"/></svg>
+            </div>
+            <div class="contact-channel-info">
+              <strong>Email</strong>
+              <span>contact@oryzondeco.fr</span>
+            </div>
+          </a>
+        </div>
+      </div>
+      <!-- Formulaire -->
+      <div class="contact-form-wrap reveal reveal-delay-2">
+        <p class="contact-form-title">Envoyez-nous un message</p>
+        <form action="#" method="post" aria-label="Formulaire de contact">
+          <div class="form-row">
+            <div class="form-group">
+              <label class="form-label" for="contact-nom">Prénom & nom</label>
+              <input class="form-input" id="contact-nom" type="text" name="nom" placeholder="Votre nom" required autocomplete="name">
+            </div>
+            <div class="form-group">
+              <label class="form-label" for="contact-email">Email</label>
+              <input class="form-input" id="contact-email" type="email" name="email" placeholder="votre@email.com" required autocomplete="email">
+            </div>
+          </div>
+          <div class="form-group full">
+            <label class="form-label" for="contact-sujet">Sujet</label>
+            <input class="form-input" id="contact-sujet" type="text" name="sujet" placeholder="Renseignement, commande, devis...">
+          </div>
+          <div class="form-group full">
+            <label class="form-label" for="contact-message">Message</label>
+            <textarea class="form-textarea" id="contact-message" name="message" placeholder="Décrivez votre projet, vos questions..." required></textarea>
+          </div>
+          <button type="submit" class="form-submit">Envoyer le message</button>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
 <!-- ════════════════════ FOOTER ════════════════════ -->
 <footer role="contentinfo">
   <div class="container">
     <div class="footer-grid">
       <div class="footer-brand">
-        <div class="logo-text">Oryzon Deco</div>
-        <p>Intérieurs Japandi & minimalistes à Mayotte. Mobilier, luminaires et objets de décoration naturels — livrés sur toute l'île. Commandes en DM ou sur le site.</p>
+        <div class="logo-text">ORyZOn.deco</div>
+        <p>Aménagement, décoration intérieure et mobilier premium à Mayotte. Matières naturelles, design épuré et ambiances chaleureuses — livrés sur toute l'île.</p>
         <div class="footer-socials">
           <a href="https://www.instagram.com/oryzon.deco" target="_blank" rel="noopener" class="social-icon" aria-label="Instagram Oryzon Deco">
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
@@ -1556,8 +1904,8 @@ footer {
           <a href="https://wa.me/262639606391" target="_blank" rel="noopener" class="social-icon" aria-label="WhatsApp Oryzon Deco">
             <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.552 4.116 1.521 5.842L.057 23.633a.5.5 0 00.61.61l5.791-1.464A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.963 9.963 0 01-5.127-1.417l-.367-.218-3.804.962.975-3.763-.239-.389A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
           </a>
-          <a href="https://www.tiktok.com/@oryzon.deco" target="_blank" rel="noopener" class="social-icon" aria-label="TikTok Oryzon Deco">
-            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-2.88 2.5 2.89 2.89 0 01-2.89-2.89 2.89 2.89 0 012.89-2.89c.28 0 .54.04.79.1V9.01a6.29 6.29 0 00-.79-.05 6.34 6.34 0 00-6.34 6.34 6.34 6.34 0 006.34 6.34 6.34 6.34 0 006.33-6.34V8.75a8.14 8.14 0 004.77 1.52V6.82a4.85 4.85 0 01-1-.13z"/></svg>
+          <a href="https://snapchat.com/add/oryzon.deco" target="_blank" rel="noopener" class="social-icon" aria-label="Snapchat Oryzon Deco" style="background:rgba(255,252,0,.15);color:#FFFC00">
+            <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M12.206.793c.99 0 4.347.276 5.93 3.821.529 1.193.403 3.219.299 4.847l-.016.25c-.008.12.122.19.199.14.249-.157.74-.195 1.223-.195.144 0 .28.028.4.095.415.232.419.974.247 1.28-.172.307-1.188.698-1.738.727-.09.005-.128.063-.162.187-.032.116-.062.285-.115.51-.053.224-.082.39-.11.526-.02.098.009.176.068.226 1.01.84 1.924 1.647 2.037 2.73.114 1.082-.6 2.044-1.723 2.44-.36.127-.793.244-1.333.327-.253.04-.403.11-.495.256-.222.355-.4 1.176-.594 1.658-.122.302-.294.47-.487.47-.164 0-.347-.083-.553-.247-.553-.44-1.158-.595-2.073-.595-.91 0-1.567.152-2.12.599-.207.163-.39.246-.554.246-.192 0-.366-.168-.488-.47-.195-.483-.372-1.304-.594-1.659-.093-.145-.243-.215-.496-.256-.54-.082-.973-.2-1.333-.327-1.122-.396-1.837-1.358-1.723-2.44.114-1.083 1.027-1.89 2.038-2.73.058-.05.087-.128.067-.226-.028-.135-.057-.302-.11-.526-.053-.224-.083-.394-.115-.51-.034-.124-.073-.183-.163-.188-.55-.029-1.565-.42-1.737-.726-.172-.306-.168-1.048.247-1.28.12-.067.255-.095.4-.095.483 0 .974.038 1.223.195.076.05.206-.02.199-.14l-.016-.25c-.104-1.628-.23-3.654.3-4.847C7.857 1.07 11.214.793 12.206.793z"/></svg>
           </a>
         </div>
       </div>
@@ -1573,30 +1921,29 @@ footer {
         </ul>
       </nav>
       <nav class="footer-col" aria-label="Service client">
-        <h4>Service client</h4>
+        <h4>Nous contacter</h4>
         <ul>
-          <li><a href="#">Mon compte</a></li>
-          <li><a href="#">Suivi de commande</a></li>
-          <li><a href="#">Livraison</a></li>
-          <li><a href="#">Retours</a></li>
-          <li><a href="https://wa.me/262639606391" target="_blank" rel="noopener">WhatsApp</a></li>
-          <li><a href="mailto:contact@oryzondeco.fr">Contact</a></li>
+          <li><a href="https://wa.me/262639606391" target="_blank" rel="noopener">WhatsApp 7j/7</a></li>
+          <li><a href="https://www.instagram.com/oryzon.deco" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://snapchat.com/add/oryzon.deco" target="_blank" rel="noopener">Snapchat</a></li>
+          <li><a href="mailto:contact@oryzondeco.fr">contact@oryzondeco.fr</a></li>
+          <li><a href="#contact">Formulaire de contact</a></li>
         </ul>
       </nav>
-      <nav class="footer-col" aria-label="Informations légales">
+      <nav class="footer-col" aria-label="Informations">
         <h4>Informations</h4>
         <ul>
-          <li><a href="#">À propos</a></li>
-          <li><a href="#">Blog déco</a></li>
+          <li><a href="#a-propos">À propos</a></li>
+          <li><a href="#inspirations">Inspirations</a></li>
+          <li><a href="#">Livraison Mayotte</a></li>
           <li><a href="#">CGV</a></li>
-          <li><a href="#">Politique de confidentialité</a></li>
           <li><a href="#">Mentions légales</a></li>
-          <li><a href="#">Cookies</a></li>
+          <li><a href="#">Politique de confidentialité</a></li>
         </ul>
       </nav>
     </div>
     <div class="footer-bottom">
-      <p class="footer-copyright">© 2025 Oryzon Deco. Tous droits réservés.</p>
+      <p class="footer-copyright">© 2025 ORyZOn.deco. Tous droits réservés.</p>
       <a href="https://wa.me/262639606391" class="footer-wa" target="_blank" rel="noopener" aria-label="Nous contacter sur WhatsApp">
         <svg width="16" height="16" fill="currentColor" viewBox="0 0 24 24" aria-hidden="true"><path d="M17.472 14.382c-.297-.149-1.758-.867-2.03-.967-.273-.099-.471-.148-.67.15-.197.297-.767.966-.94 1.164-.173.199-.347.223-.644.075-.297-.15-1.255-.463-2.39-1.475-.883-.788-1.48-1.761-1.653-2.059-.173-.297-.018-.458.13-.606.134-.133.298-.347.446-.52.149-.174.198-.298.298-.497.099-.198.05-.371-.025-.52-.075-.149-.669-1.612-.916-2.207-.242-.579-.487-.5-.669-.51-.173-.008-.371-.01-.57-.01-.198 0-.52.074-.792.372-.272.297-1.04 1.016-1.04 2.479 0 1.462 1.065 2.875 1.213 3.074.149.198 2.096 3.2 5.077 4.487.709.306 1.262.489 1.694.625.712.227 1.36.195 1.871.118.571-.085 1.758-.719 2.006-1.413.248-.694.248-1.289.173-1.413-.074-.124-.272-.198-.57-.347z"/><path d="M12 0C5.373 0 0 5.373 0 12c0 2.123.552 4.116 1.521 5.842L.057 23.633a.5.5 0 00.61.61l5.791-1.464A11.945 11.945 0 0012 24c6.627 0 12-5.373 12-12S18.627 0 12 0zm0 22a9.963 9.963 0 01-5.127-1.417l-.367-.218-3.804.962.975-3.763-.239-.389A9.961 9.961 0 012 12C2 6.477 6.477 2 12 2s10 4.477 10 10-4.477 10-10 10z"/></svg>
         Support WhatsApp 7j/7
@@ -1665,7 +2012,7 @@ footer {
     </button>
     <p class="popup-eyebrow">Offre de bienvenue</p>
     <h3 class="popup-title" id="popupTitle">-10% sur votre<br>première commande</h3>
-    <p class="popup-text">Inscrivez-vous et recevez votre code promo exclusif + nos dernières inspirations Japandi directement dans votre boîte mail.</p>
+    <p class="popup-text">Inscrivez-vous et recevez votre code promo exclusif + nos dernières inspirations déco directement dans votre boîte mail.</p>
     <form class="popup-form" action="#" method="post" aria-label="Obtenir le code promo">
       <label for="popup-email" class="sr-only">Votre adresse email</label>
       <input class="popup-input" id="popup-email" type="email" name="email" placeholder="Votre adresse email" required autocomplete="email">

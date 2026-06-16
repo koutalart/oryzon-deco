@@ -1,0 +1,1825 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+<meta charset="UTF-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<title>ORyZOn.deco — Admin</title>
+<script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/4.4.1/chart.umd.min.js"></script>
+<link rel="preconnect" href="https://fonts.googleapis.com" />
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,400&family=Montserrat:wght@300;400;500;600&display=swap" rel="stylesheet" />
+<style>
+/* ───────────────────────── VARIABLES ───────────────────────── */
+:root {
+  --black:   #1E1710;
+  --dark:    #2A2018;
+  --gold:    #C4714A;
+  --gold-lt: #D4906E;
+  --olive:   #7A8C6E;
+  --slate:   #8A9BA8;
+  --blush:   #C9A898;
+  --beige:   #F5F0E8;
+  --sand:    #EBE4D6;
+  --white:   #FDFAF6;
+  --gray:    #9A9490;
+  --danger:  #C44A4A;
+  --success: #4A8C6E;
+  --warning: #C4A44A;
+  --sidebar-w: 230px;
+  --trans: 0.3s cubic-bezier(.4,0,.2,1);
+}
+
+/* ───────────────────────── RESET ───────────────────────── */
+*, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+html, body { height: 100%; }
+body {
+  font-family: 'Montserrat', sans-serif;
+  background: var(--sand);
+  color: var(--black);
+  font-size: 13px;
+  font-weight: 400;
+  line-height: 1.5;
+}
+h1, h2, h3, h4 { font-family: 'Cormorant Garamond', serif; font-weight: 600; }
+button { cursor: pointer; font-family: inherit; }
+input, select, textarea { font-family: inherit; }
+a { color: inherit; text-decoration: none; }
+
+/* ───────────────────────── SCREENS ───────────────────────── */
+.screen { display: none; }
+.screen.active { display: flex; }
+
+/* ══════════════════════════════════════════════════
+   CONFIG SCREEN
+══════════════════════════════════════════════════ */
+#screen-config {
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: var(--dark);
+  flex-direction: column;
+  gap: 2rem;
+}
+.config-card {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 2.5rem 2rem;
+  width: min(420px, 92vw);
+  box-shadow: 0 8px 40px rgba(0,0,0,.25);
+}
+.config-card .brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.6rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .04em;
+  text-align: center;
+  margin-bottom: .25rem;
+}
+.config-card .brand-sub {
+  text-align: center;
+  color: var(--gray);
+  font-size: .7rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.form-group { margin-bottom: 1.25rem; }
+.form-group label {
+  display: block;
+  font-size: .7rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: .4rem;
+}
+.form-group input {
+  width: 100%;
+  padding: .6rem .8rem;
+  border: 1px solid var(--sand);
+  border-radius: 2px;
+  background: var(--beige);
+  color: var(--black);
+  font-size: .8rem;
+  transition: border-color var(--trans);
+}
+.form-group input:focus {
+  outline: none;
+  border-color: var(--gold);
+}
+.btn-primary {
+  width: 100%;
+  padding: .75rem;
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  border-radius: 2px;
+  font-size: .7rem;
+  letter-spacing: .14em;
+  text-transform: uppercase;
+  font-weight: 500;
+  transition: background var(--trans);
+  margin-top: .5rem;
+}
+.btn-primary:hover { background: var(--gold-lt); }
+.config-hint {
+  color: var(--gray);
+  font-size: .65rem;
+  line-height: 1.6;
+  text-align: center;
+  max-width: 380px;
+  padding: 0 1rem;
+}
+.config-hint a { color: var(--gold-lt); text-decoration: underline; }
+
+/* ══════════════════════════════════════════════════
+   LOGIN SCREEN
+══════════════════════════════════════════════════ */
+#screen-login {
+  min-height: 100vh;
+  align-items: center;
+  justify-content: center;
+  background: var(--dark);
+  flex-direction: column;
+  gap: 1.5rem;
+}
+.login-card {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 2.5rem 2rem;
+  width: min(400px, 92vw);
+  box-shadow: 0 8px 40px rgba(0,0,0,.25);
+}
+.login-card .brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.8rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .04em;
+  text-align: center;
+  margin-bottom: .2rem;
+}
+.login-card .brand-sub {
+  text-align: center;
+  color: var(--gray);
+  font-size: .65rem;
+  letter-spacing: .16em;
+  text-transform: uppercase;
+  margin-bottom: 2rem;
+}
+.login-error {
+  display: none;
+  background: rgba(196,74,74,.1);
+  border: 1px solid rgba(196,74,74,.3);
+  color: var(--danger);
+  padding: .6rem .8rem;
+  border-radius: 2px;
+  font-size: .75rem;
+  margin-bottom: 1rem;
+}
+.login-error.show { display: block; }
+.login-link {
+  text-align: center;
+  margin-top: 1rem;
+  font-size: .7rem;
+  color: var(--gray);
+}
+.login-link button {
+  background: none;
+  border: none;
+  color: var(--gold);
+  font-size: .7rem;
+  text-decoration: underline;
+  padding: 0;
+}
+.reconfigure-btn {
+  color: var(--gray);
+  font-size: .65rem;
+  letter-spacing: .08em;
+  text-transform: uppercase;
+  background: none;
+  border: none;
+  opacity: .7;
+  transition: opacity var(--trans);
+}
+.reconfigure-btn:hover { opacity: 1; }
+
+/* ══════════════════════════════════════════════════
+   MAIN APP
+══════════════════════════════════════════════════ */
+#screen-app {
+  flex-direction: row;
+  min-height: 100vh;
+}
+
+/* SIDEBAR */
+.sidebar {
+  width: var(--sidebar-w);
+  background: var(--dark);
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  flex-shrink: 0;
+  position: sticky;
+  top: 0;
+  height: 100vh;
+  overflow-y: auto;
+}
+.sidebar-logo {
+  padding: 1.6rem 1.4rem 1.2rem;
+  border-bottom: 1px solid rgba(255,255,255,.07);
+}
+.sidebar-logo .brand {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 1.2rem;
+  font-weight: 600;
+  color: var(--gold);
+  letter-spacing: .04em;
+}
+.sidebar-logo .brand-sub {
+  color: rgba(255,255,255,.3);
+  font-size: .55rem;
+  letter-spacing: .15em;
+  text-transform: uppercase;
+  margin-top: .1rem;
+}
+.sidebar-nav {
+  flex: 1;
+  padding: 1rem 0;
+}
+.nav-section-label {
+  padding: .6rem 1.4rem .3rem;
+  color: rgba(255,255,255,.2);
+  font-size: .55rem;
+  letter-spacing: .18em;
+  text-transform: uppercase;
+}
+.nav-item {
+  display: flex;
+  align-items: center;
+  gap: .7rem;
+  padding: .65rem 1.4rem;
+  color: rgba(255,255,255,.55);
+  font-size: .72rem;
+  letter-spacing: .06em;
+  cursor: pointer;
+  transition: all var(--trans);
+  border-left: 2px solid transparent;
+  position: relative;
+}
+.nav-item:hover {
+  color: var(--white);
+  background: rgba(255,255,255,.05);
+}
+.nav-item.active {
+  color: var(--gold-lt);
+  background: rgba(196,113,74,.12);
+  border-left-color: var(--gold);
+}
+.nav-item .nav-icon { font-size: .95rem; width: 18px; text-align: center; flex-shrink: 0; }
+.nav-badge {
+  margin-left: auto;
+  background: var(--gold);
+  color: var(--white);
+  font-size: .55rem;
+  padding: .1rem .35rem;
+  border-radius: 8px;
+  font-weight: 500;
+}
+.sidebar-footer {
+  padding: 1rem 1.4rem;
+  border-top: 1px solid rgba(255,255,255,.07);
+}
+.user-info {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  margin-bottom: .75rem;
+}
+.user-avatar {
+  width: 28px; height: 28px;
+  border-radius: 50%;
+  background: var(--gold);
+  display: flex; align-items: center; justify-content: center;
+  font-size: .7rem;
+  font-weight: 600;
+  color: var(--white);
+  flex-shrink: 0;
+}
+.user-email {
+  color: rgba(255,255,255,.45);
+  font-size: .6rem;
+  white-space: nowrap;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.logout-btn {
+  width: 100%;
+  padding: .45rem;
+  background: rgba(255,255,255,.05);
+  border: 1px solid rgba(255,255,255,.1);
+  border-radius: 2px;
+  color: rgba(255,255,255,.4);
+  font-size: .62rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: all var(--trans);
+}
+.logout-btn:hover {
+  background: rgba(196,74,74,.15);
+  border-color: rgba(196,74,74,.3);
+  color: rgba(255,255,255,.7);
+}
+
+/* MAIN CONTENT */
+.main-content {
+  flex: 1;
+  min-height: 100vh;
+  display: flex;
+  flex-direction: column;
+  overflow-x: hidden;
+}
+.topbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.8rem;
+  background: var(--white);
+  border-bottom: 1px solid var(--sand);
+  position: sticky;
+  top: 0;
+  z-index: 10;
+}
+.topbar-title { font-size: 1.2rem; font-weight: 600; color: var(--black); }
+.topbar-right { display: flex; align-items: center; gap: .75rem; }
+.topbar-date { color: var(--gray); font-size: .68rem; }
+.refresh-btn {
+  padding: .35rem .7rem;
+  background: var(--sand);
+  border: 1px solid rgba(0,0,0,.08);
+  border-radius: 2px;
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  transition: all var(--trans);
+}
+.refresh-btn:hover { background: var(--beige); color: var(--black); }
+
+.page { display: none; padding: 1.8rem; flex: 1; }
+.page.active { display: block; }
+
+/* ── LOADING / EMPTY STATES ── */
+.loading-spinner {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 1rem;
+  padding: 4rem;
+  color: var(--gray);
+}
+.spinner {
+  width: 32px; height: 32px;
+  border: 2px solid var(--sand);
+  border-top-color: var(--gold);
+  border-radius: 50%;
+  animation: spin .7s linear infinite;
+}
+@keyframes spin { to { transform: rotate(360deg); } }
+.empty-state {
+  text-align: center;
+  padding: 4rem;
+  color: var(--gray);
+}
+.empty-state h3 { font-size: 1.3rem; margin-bottom: .5rem; color: var(--blush); }
+
+/* ══════════════════════════════════════════════════
+   KPI CARDS
+══════════════════════════════════════════════════ */
+.kpi-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(180px, 1fr));
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+.kpi-card {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 1.2rem 1.4rem;
+  border: 1px solid rgba(0,0,0,.05);
+  position: relative;
+  overflow: hidden;
+}
+.kpi-card::before {
+  content: '';
+  position: absolute;
+  top: 0; left: 0;
+  width: 3px; height: 100%;
+  background: var(--gold);
+}
+.kpi-card.olive::before { background: var(--olive); }
+.kpi-card.slate::before { background: var(--slate); }
+.kpi-card.blush::before { background: var(--blush); }
+.kpi-label {
+  font-size: .6rem;
+  letter-spacing: .12em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: .35rem;
+}
+.kpi-value {
+  font-family: 'Cormorant Garamond', serif;
+  font-size: 2rem;
+  font-weight: 600;
+  color: var(--black);
+  line-height: 1;
+  margin-bottom: .25rem;
+}
+.kpi-value small { font-size: 1rem; font-weight: 400; }
+.kpi-trend {
+  font-size: .65rem;
+  color: var(--gray);
+}
+.kpi-trend.up { color: var(--success); }
+.kpi-trend.down { color: var(--danger); }
+
+/* ══════════════════════════════════════════════════
+   CHART CARDS
+══════════════════════════════════════════════════ */
+.chart-grid {
+  display: grid;
+  grid-template-columns: 2fr 1fr;
+  gap: 1rem;
+  margin-bottom: 1.5rem;
+}
+@media (max-width: 900px) { .chart-grid { grid-template-columns: 1fr; } }
+.chart-card {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 1.4rem;
+  border: 1px solid rgba(0,0,0,.05);
+}
+.chart-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.2rem;
+}
+.chart-title {
+  font-size: 1rem;
+  font-weight: 600;
+  color: var(--black);
+}
+.chart-subtitle { font-size: .65rem; color: var(--gray); font-family: 'Montserrat', sans-serif; }
+.chart-canvas-wrap { position: relative; height: 200px; }
+
+/* ══════════════════════════════════════════════════
+   DATA TABLES
+══════════════════════════════════════════════════ */
+.table-card {
+  background: var(--white);
+  border-radius: 4px;
+  border: 1px solid rgba(0,0,0,.05);
+  overflow: hidden;
+  margin-bottom: 1rem;
+}
+.table-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 1rem 1.4rem;
+  border-bottom: 1px solid var(--sand);
+  flex-wrap: wrap;
+  gap: .75rem;
+}
+.table-title { font-size: 1rem; font-weight: 600; }
+.table-controls { display: flex; gap: .5rem; align-items: center; flex-wrap: wrap; }
+.search-input {
+  padding: .35rem .65rem;
+  border: 1px solid var(--sand);
+  border-radius: 2px;
+  background: var(--beige);
+  font-size: .72rem;
+  color: var(--black);
+  width: 160px;
+  transition: border-color var(--trans);
+}
+.search-input:focus { outline: none; border-color: var(--gold); }
+.filter-select {
+  padding: .35rem .6rem;
+  border: 1px solid var(--sand);
+  border-radius: 2px;
+  background: var(--beige);
+  font-size: .72rem;
+  color: var(--black);
+  cursor: pointer;
+}
+.filter-select:focus { outline: none; border-color: var(--gold); }
+.btn-sm {
+  padding: .35rem .75rem;
+  background: var(--gold);
+  color: var(--white);
+  border: none;
+  border-radius: 2px;
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  transition: background var(--trans);
+}
+.btn-sm:hover { background: var(--gold-lt); }
+.btn-sm.outline {
+  background: transparent;
+  border: 1px solid var(--sand);
+  color: var(--gray);
+}
+.btn-sm.outline:hover { border-color: var(--gold); color: var(--gold); background: transparent; }
+.data-table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: .75rem;
+}
+.data-table th {
+  padding: .65rem 1rem;
+  text-align: left;
+  font-size: .6rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  font-weight: 500;
+  background: var(--beige);
+  border-bottom: 1px solid var(--sand);
+  white-space: nowrap;
+}
+.data-table td {
+  padding: .7rem 1rem;
+  border-bottom: 1px solid var(--sand);
+  vertical-align: middle;
+}
+.data-table tbody tr:last-child td { border-bottom: none; }
+.data-table tbody tr:hover { background: rgba(245,240,232,.5); }
+.data-table .col-num { text-align: right; font-variant-numeric: tabular-nums; }
+.table-scroll { overflow-x: auto; }
+
+/* BADGES / STATUS */
+.badge {
+  display: inline-flex;
+  align-items: center;
+  padding: .2rem .55rem;
+  border-radius: 20px;
+  font-size: .6rem;
+  font-weight: 500;
+  letter-spacing: .06em;
+  white-space: nowrap;
+}
+.badge-pending   { background: rgba(196,164,74,.15);  color: #8a7020; }
+.badge-confirmed { background: rgba(74,140,110,.15);  color: var(--success); }
+.badge-shipped   { background: rgba(138,155,168,.15); color: #4a6a7a; }
+.badge-delivered { background: rgba(122,140,110,.2);  color: var(--olive); }
+.badge-cancelled { background: rgba(196,74,74,.12);   color: var(--danger); }
+.badge-low       { background: rgba(196,74,74,.12);   color: var(--danger); }
+.badge-ok        { background: rgba(74,140,110,.12);  color: var(--success); }
+
+/* ══════════════════════════════════════════════════
+   PAGE HEADERS
+══════════════════════════════════════════════════ */
+.page-header { margin-bottom: 1.5rem; }
+.page-header h2 { font-size: 1.6rem; font-weight: 600; margin-bottom: .2rem; }
+.page-header p { color: var(--gray); font-size: .75rem; }
+
+/* ══════════════════════════════════════════════════
+   PRODUCT PAGE
+══════════════════════════════════════════════════ */
+.stock-bar-wrap { background: var(--sand); border-radius: 2px; height: 4px; width: 80px; overflow: hidden; }
+.stock-bar { height: 100%; border-radius: 2px; background: var(--success); transition: width .5s; }
+.stock-bar.low { background: var(--danger); }
+.stock-bar.mid { background: var(--warning); }
+.product-img-thumb {
+  width: 36px; height: 36px;
+  border-radius: 2px;
+  background: var(--sand);
+  object-fit: cover;
+  display: flex; align-items: center; justify-content: center;
+  font-size: 1.1rem;
+  color: var(--gray);
+  overflow: hidden;
+}
+
+/* ══════════════════════════════════════════════════
+   MODAL
+══════════════════════════════════════════════════ */
+.modal-overlay {
+  display: none;
+  position: fixed;
+  inset: 0;
+  background: rgba(0,0,0,.5);
+  z-index: 100;
+  align-items: center;
+  justify-content: center;
+}
+.modal-overlay.show { display: flex; }
+.modal {
+  background: var(--white);
+  border-radius: 4px;
+  padding: 2rem;
+  width: min(500px, 94vw);
+  max-height: 90vh;
+  overflow-y: auto;
+  box-shadow: 0 12px 48px rgba(0,0,0,.3);
+}
+.modal-header {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  margin-bottom: 1.5rem;
+}
+.modal-title { font-size: 1.3rem; font-weight: 600; }
+.modal-close {
+  background: none;
+  border: none;
+  font-size: 1.2rem;
+  color: var(--gray);
+  cursor: pointer;
+  line-height: 1;
+  padding: .2rem;
+  transition: color var(--trans);
+}
+.modal-close:hover { color: var(--black); }
+.modal-field { margin-bottom: 1rem; }
+.modal-field label {
+  display: block;
+  font-size: .65rem;
+  letter-spacing: .1em;
+  text-transform: uppercase;
+  color: var(--gray);
+  margin-bottom: .35rem;
+}
+.modal-field .value {
+  font-size: .82rem;
+  color: var(--black);
+  padding: .5rem .7rem;
+  background: var(--beige);
+  border-radius: 2px;
+}
+.modal-field select {
+  width: 100%;
+  padding: .5rem .7rem;
+  border: 1px solid var(--sand);
+  border-radius: 2px;
+  background: var(--beige);
+  font-size: .82rem;
+  color: var(--black);
+}
+.modal-field select:focus { outline: none; border-color: var(--gold); }
+.modal-actions { display: flex; gap: .75rem; justify-content: flex-end; margin-top: 1.5rem; }
+.order-items-list { display: flex; flex-direction: column; gap: .5rem; }
+.order-item {
+  display: flex;
+  align-items: center;
+  gap: .75rem;
+  padding: .6rem;
+  background: var(--beige);
+  border-radius: 2px;
+  font-size: .75rem;
+}
+.order-item-qty {
+  background: var(--gold);
+  color: var(--white);
+  width: 22px; height: 22px;
+  border-radius: 50%;
+  display: flex; align-items: center; justify-content: center;
+  font-size: .65rem;
+  font-weight: 600;
+  flex-shrink: 0;
+}
+.order-item-name { flex: 1; }
+.order-item-price { font-weight: 500; }
+
+/* ══════════════════════════════════════════════════
+   NOTIFICATION TOAST
+══════════════════════════════════════════════════ */
+.toast {
+  position: fixed;
+  bottom: 1.5rem; right: 1.5rem;
+  background: var(--dark);
+  color: var(--white);
+  padding: .7rem 1.2rem;
+  border-radius: 4px;
+  font-size: .75rem;
+  box-shadow: 0 4px 20px rgba(0,0,0,.3);
+  z-index: 200;
+  opacity: 0;
+  transform: translateY(10px);
+  transition: all .3s;
+  pointer-events: none;
+}
+.toast.show { opacity: 1; transform: translateY(0); }
+.toast.success { border-left: 3px solid var(--success); }
+.toast.error   { border-left: 3px solid var(--danger); }
+
+/* ══════════════════════════════════════════════════
+   PAGINATION
+══════════════════════════════════════════════════ */
+.pagination {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: .75rem 1rem;
+  border-top: 1px solid var(--sand);
+  font-size: .7rem;
+  color: var(--gray);
+}
+.pagination-btns { display: flex; gap: .4rem; }
+.pg-btn {
+  padding: .3rem .6rem;
+  background: var(--sand);
+  border: none;
+  border-radius: 2px;
+  font-size: .7rem;
+  color: var(--gray);
+  cursor: pointer;
+  transition: all var(--trans);
+}
+.pg-btn:hover { background: var(--beige); color: var(--black); }
+.pg-btn.active { background: var(--gold); color: var(--white); }
+.pg-btn:disabled { opacity: .4; cursor: not-allowed; }
+
+/* ══════════════════════════════════════════════════
+   DEMO BANNER
+══════════════════════════════════════════════════ */
+.demo-banner {
+  display: flex;
+  align-items: center;
+  gap: .6rem;
+  padding: .55rem 1rem;
+  background: rgba(196,113,74,.1);
+  border-bottom: 1px solid rgba(196,113,74,.2);
+  font-size: .68rem;
+  color: var(--gold);
+}
+.demo-banner strong { font-weight: 600; }
+
+/* ══════════════════════════════════════════════════
+   RESPONSIVE
+══════════════════════════════════════════════════ */
+@media (max-width: 768px) {
+  :root { --sidebar-w: 60px; }
+  .sidebar-logo .brand, .sidebar-logo .brand-sub,
+  .nav-item span.nav-label, .nav-section-label,
+  .nav-badge, .user-email, .logout-btn { display: none; }
+  .nav-item { padding: .75rem; justify-content: center; }
+  .nav-item .nav-icon { width: auto; font-size: 1.1rem; }
+  .sidebar-logo { padding: 1rem .8rem; text-align: center; }
+  .sidebar-logo::before { content: '⬡'; color: var(--gold); font-size: 1.2rem; }
+  .user-info { justify-content: center; }
+  .user-avatar { margin: 0; }
+  .sidebar-footer { padding: .75rem .5rem; }
+  .kpi-grid { grid-template-columns: 1fr 1fr; }
+  .page { padding: 1rem; }
+  .topbar { padding: .75rem 1rem; }
+}
+</style>
+</head>
+<body>
+
+<!-- ──────────────────────── SCREEN: CONFIG ──────────────────────── -->
+<div id="screen-config" class="screen">
+  <div class="config-card">
+    <div class="brand">ORyZOn.deco</div>
+    <div class="brand-sub">Configuration Supabase</div>
+    <div class="form-group">
+      <label>URL du projet Supabase</label>
+      <input id="cfg-url" type="text" placeholder="https://xxxx.supabase.co" autocomplete="off" />
+    </div>
+    <div class="form-group">
+      <label>Clé anonyme (anon key)</label>
+      <input id="cfg-key" type="text" placeholder="eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9..." autocomplete="off" />
+    </div>
+    <button class="btn-primary" onclick="saveConfig()">Enregistrer &amp; continuer</button>
+  </div>
+  <p class="config-hint">
+    Retrouvez ces informations dans votre dashboard Supabase →
+    <em>Project Settings → API</em>.<br/>
+    <a href="https://app.supabase.com" target="_blank">Ouvrir Supabase ↗</a>
+  </p>
+</div>
+
+<!-- ──────────────────────── SCREEN: LOGIN ──────────────────────── -->
+<div id="screen-login" class="screen">
+  <div class="login-card">
+    <div class="brand">ORyZOn.deco</div>
+    <div class="brand-sub">Administration</div>
+    <div id="login-error" class="login-error"></div>
+    <div class="form-group">
+      <label>Email</label>
+      <input id="login-email" type="email" placeholder="admin@oryzon.deco" autocomplete="email" />
+    </div>
+    <div class="form-group">
+      <label>Mot de passe</label>
+      <input id="login-password" type="password" placeholder="••••••••" autocomplete="current-password" />
+    </div>
+    <button class="btn-primary" onclick="doLogin()">Se connecter</button>
+    <div class="login-link">
+      <span>Mode démo (sans Supabase) — </span>
+      <button onclick="demoLogin()">Accès démo</button>
+    </div>
+  </div>
+  <button class="reconfigure-btn" onclick="showScreen('config')">⚙ Reconfigurer Supabase</button>
+</div>
+
+<!-- ──────────────────────── SCREEN: APP ──────────────────────── -->
+<div id="screen-app" class="screen">
+
+  <!-- SIDEBAR -->
+  <aside class="sidebar">
+    <div class="sidebar-logo">
+      <div class="brand">ORyZOn.deco</div>
+      <div class="brand-sub">Admin</div>
+    </div>
+    <nav class="sidebar-nav">
+      <div class="nav-section-label">Tableau de bord</div>
+      <div class="nav-item active" onclick="showPage('page-ventes', this)">
+        <span class="nav-icon">📊</span>
+        <span class="nav-label">Ventes &amp; CA</span>
+      </div>
+      <div class="nav-section-label">Gestion</div>
+      <div class="nav-item" onclick="showPage('page-commandes', this)">
+        <span class="nav-icon">📦</span>
+        <span class="nav-label">Commandes</span>
+        <span class="nav-badge" id="badge-commandes">0</span>
+      </div>
+      <div class="nav-item" onclick="showPage('page-produits', this)">
+        <span class="nav-icon">🛋</span>
+        <span class="nav-label">Produits &amp; stock</span>
+      </div>
+      <div class="nav-item" onclick="showPage('page-clients', this)">
+        <span class="nav-icon">👤</span>
+        <span class="nav-label">Clients</span>
+      </div>
+    </nav>
+    <div class="sidebar-footer">
+      <div class="user-info">
+        <div class="user-avatar" id="user-avatar">A</div>
+        <div class="user-email" id="user-email">admin</div>
+      </div>
+      <button class="logout-btn" onclick="doLogout()">Déconnexion</button>
+    </div>
+  </aside>
+
+  <!-- MAIN -->
+  <div class="main-content">
+    <div id="demo-banner" class="demo-banner" style="display:none">
+      <span>⚠</span> <strong>Mode démo</strong> — données fictives. Connectez Supabase pour les vraies données.
+    </div>
+
+    <div class="topbar">
+      <div class="topbar-title" id="topbar-title">Ventes &amp; Chiffre d'affaires</div>
+      <div class="topbar-right">
+        <span class="topbar-date" id="topbar-date"></span>
+        <button class="refresh-btn" onclick="refreshCurrentPage()">↻ Actualiser</button>
+      </div>
+    </div>
+
+    <!-- ════════════ PAGE: VENTES & CA ════════════ -->
+    <div id="page-ventes" class="page active">
+      <div class="page-header">
+        <h2>Ventes &amp; Chiffre d'affaires</h2>
+        <p>Vue d'ensemble des performances commerciales</p>
+      </div>
+
+      <div class="kpi-grid" id="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">CA Aujourd'hui</div>
+          <div class="kpi-value" id="kpi-today">—</div>
+          <div class="kpi-trend" id="kpi-today-trend">—</div>
+        </div>
+        <div class="kpi-card olive">
+          <div class="kpi-label">CA Cette semaine</div>
+          <div class="kpi-value" id="kpi-week">—</div>
+          <div class="kpi-trend" id="kpi-week-trend">—</div>
+        </div>
+        <div class="kpi-card slate">
+          <div class="kpi-label">CA Ce mois</div>
+          <div class="kpi-value" id="kpi-month">—</div>
+          <div class="kpi-trend" id="kpi-month-trend">—</div>
+        </div>
+        <div class="kpi-card blush">
+          <div class="kpi-label">Commandes ce mois</div>
+          <div class="kpi-value" id="kpi-orders">—</div>
+          <div class="kpi-trend" id="kpi-orders-trend">—</div>
+        </div>
+      </div>
+
+      <div class="chart-grid">
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Évolution du CA</div>
+              <div class="chart-subtitle">30 derniers jours</div>
+            </div>
+          </div>
+          <div class="chart-canvas-wrap"><canvas id="chart-ca"></canvas></div>
+        </div>
+        <div class="chart-card">
+          <div class="chart-header">
+            <div>
+              <div class="chart-title">Top Produits</div>
+              <div class="chart-subtitle">Par chiffre d'affaires</div>
+            </div>
+          </div>
+          <div class="chart-canvas-wrap"><canvas id="chart-top"></canvas></div>
+        </div>
+      </div>
+
+      <div class="chart-card">
+        <div class="chart-header">
+          <div>
+            <div class="chart-title">Répartition par catégorie</div>
+            <div class="chart-subtitle">Mois en cours</div>
+          </div>
+        </div>
+        <div class="chart-canvas-wrap" style="height:160px"><canvas id="chart-cats"></canvas></div>
+      </div>
+    </div>
+
+    <!-- ════════════ PAGE: COMMANDES ════════════ -->
+    <div id="page-commandes" class="page">
+      <div class="page-header">
+        <h2>Commandes</h2>
+        <p>Suivi et gestion de toutes les commandes</p>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Liste des commandes</div>
+          <div class="table-controls">
+            <input type="text" class="search-input" id="search-orders" placeholder="Rechercher..." oninput="filterOrders()" />
+            <select class="filter-select" id="filter-status" onchange="filterOrders()">
+              <option value="">Tous les statuts</option>
+              <option value="pending">En attente</option>
+              <option value="confirmed">Confirmée</option>
+              <option value="shipped">Expédiée</option>
+              <option value="delivered">Livrée</option>
+              <option value="cancelled">Annulée</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Réf.</th>
+                <th>Client</th>
+                <th>Date</th>
+                <th>Produits</th>
+                <th class="col-num">Montant</th>
+                <th>Statut</th>
+                <th>Action</th>
+              </tr>
+            </thead>
+            <tbody id="orders-tbody">
+              <tr><td colspan="7"><div class="loading-spinner"><div class="spinner"></div><span>Chargement…</span></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="orders-count">—</span>
+          <div class="pagination-btns" id="orders-pages"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ PAGE: PRODUITS & STOCK ════════════ -->
+    <div id="page-produits" class="page">
+      <div class="page-header">
+        <h2>Produits &amp; Stock</h2>
+        <p>Catalogue et niveaux de stock</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Total produits</div>
+          <div class="kpi-value" id="prod-total">—</div>
+        </div>
+        <div class="kpi-card olive">
+          <div class="kpi-label">En stock</div>
+          <div class="kpi-value" id="prod-instock">—</div>
+        </div>
+        <div class="kpi-card blush">
+          <div class="kpi-label">Stock faible (&lt;5)</div>
+          <div class="kpi-value" id="prod-low">—</div>
+        </div>
+        <div class="kpi-card slate">
+          <div class="kpi-label">Rupture de stock</div>
+          <div class="kpi-value" id="prod-out">—</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Catalogue</div>
+          <div class="table-controls">
+            <input type="text" class="search-input" id="search-products" placeholder="Nom, catégorie…" oninput="filterProducts()" />
+            <select class="filter-select" id="filter-cat" onchange="filterProducts()">
+              <option value="">Toutes catégories</option>
+              <option value="Salon">Salon</option>
+              <option value="Chambre">Chambre</option>
+              <option value="Salle à manger">Salle à manger</option>
+              <option value="Décoration">Décoration</option>
+              <option value="Salle de bain">Salle de bain</option>
+              <option value="Extérieur">Extérieur</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Produit</th>
+                <th>Catégorie</th>
+                <th class="col-num">Prix</th>
+                <th class="col-num">Stock</th>
+                <th>Niveau</th>
+                <th>Statut</th>
+              </tr>
+            </thead>
+            <tbody id="products-tbody">
+              <tr><td colspan="6"><div class="loading-spinner"><div class="spinner"></div><span>Chargement…</span></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="products-count">—</span>
+          <div class="pagination-btns" id="products-pages"></div>
+        </div>
+      </div>
+    </div>
+
+    <!-- ════════════ PAGE: CLIENTS ════════════ -->
+    <div id="page-clients" class="page">
+      <div class="page-header">
+        <h2>Clients</h2>
+        <p>Base client et historique d'achats</p>
+      </div>
+      <div class="kpi-grid">
+        <div class="kpi-card">
+          <div class="kpi-label">Total clients</div>
+          <div class="kpi-value" id="cli-total">—</div>
+        </div>
+        <div class="kpi-card olive">
+          <div class="kpi-label">Nouveaux ce mois</div>
+          <div class="kpi-value" id="cli-new">—</div>
+        </div>
+        <div class="kpi-card slate">
+          <div class="kpi-label">Panier moyen</div>
+          <div class="kpi-value" id="cli-avg">—</div>
+        </div>
+      </div>
+      <div class="table-card">
+        <div class="table-header">
+          <div class="table-title">Liste des clients</div>
+          <div class="table-controls">
+            <input type="text" class="search-input" id="search-clients" placeholder="Nom, email…" oninput="filterClients()" />
+            <select class="filter-select" id="filter-client-sort" onchange="filterClients()">
+              <option value="last_order">Dernière commande</option>
+              <option value="total_spent">CA total ↓</option>
+              <option value="name">Nom A→Z</option>
+            </select>
+          </div>
+        </div>
+        <div class="table-scroll">
+          <table class="data-table">
+            <thead>
+              <tr>
+                <th>Client</th>
+                <th>Email</th>
+                <th>Téléphone</th>
+                <th class="col-num">Commandes</th>
+                <th class="col-num">CA total</th>
+                <th>Dernière commande</th>
+              </tr>
+            </thead>
+            <tbody id="clients-tbody">
+              <tr><td colspan="6"><div class="loading-spinner"><div class="spinner"></div><span>Chargement…</span></div></td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="pagination">
+          <span id="clients-count">—</span>
+          <div class="pagination-btns" id="clients-pages"></div>
+        </div>
+      </div>
+    </div>
+
+  </div><!-- /main-content -->
+</div><!-- /screen-app -->
+
+<!-- ──────────────────────── MODAL COMMANDE ──────────────────────── -->
+<div id="modal-order" class="modal-overlay">
+  <div class="modal">
+    <div class="modal-header">
+      <div class="modal-title">Détail commande <span id="modal-order-ref"></span></div>
+      <button class="modal-close" onclick="closeModal('modal-order')">✕</button>
+    </div>
+    <div id="modal-order-content"></div>
+    <div class="modal-actions">
+      <button class="btn-sm outline" onclick="closeModal('modal-order')">Fermer</button>
+      <button class="btn-sm" onclick="saveOrderStatus()">Enregistrer</button>
+    </div>
+  </div>
+</div>
+
+<!-- ──────────────────────── TOAST ──────────────────────── -->
+<div id="toast" class="toast"></div>
+
+<!-- ════════════════════════════════════════════
+     JAVASCRIPT
+════════════════════════════════════════════ -->
+<script>
+/* ─────────── STATE ─────────── */
+let supabaseClient = null;
+let currentUser = null;
+let isDemoMode = false;
+let charts = {};
+let allOrders = [], allProducts = [], allClients = [];
+let filteredOrders = [], filteredProducts = [], filteredClients = [];
+let currentOrderId = null;
+const PAGE_SIZE = 12;
+let pages = { orders: 1, products: 1, clients: 1 };
+
+/* ─────────── DEMO DATA ─────────── */
+function generateDemoData() {
+  const names = ['Aminata Saïd','Faouzia Omar','Moussa Ali','Nasra Hamid','Ibrahim Sidi','Karima Anli','Youssouf Bacar','Zahra Combo','Rachid Moussa','Fatima Ahmed','Ali Toihir','Nadjma Ousseni'];
+  const products = [
+    {id:1, name:'Canapé Lin Naturel 3 places', category:'Salon', price:189000, stock:3},
+    {id:2, name:'Table basse en teck massif', category:'Salon', price:87500, stock:7},
+    {id:3, name:'Lampe Wabi-Sabi bambou', category:'Décoration', price:24900, stock:0},
+    {id:4, name:'Lit plateforme chêne 160×200', category:'Chambre', price:225000, stock:2},
+    {id:5, name:'Chevet céramique artisanal', category:'Chambre', price:34500, stock:12},
+    {id:6, name:'Table à manger acacia 8 couverts', category:'Salle à manger', price:315000, stock:1},
+    {id:7, name:'Chaises rotin tressé (lot de 4)', category:'Salle à manger', price:96000, stock:5},
+    {id:8, name:'Miroir en rotin oval', category:'Décoration', price:18900, stock:9},
+    {id:9, name:'Coussin en kapok bio 45×45', category:'Décoration', price:6900, stock:24},
+    {id:10,'name':'Fauteuil bain de soleil teck', category:'Extérieur', price:78000, stock:4},
+    {id:11,'name':'Pot en terre cuite XL', category:'Extérieur', price:12500, stock:0},
+    {id:12,'name':'Tapis berbère 200×300', category:'Salon', price:145000, stock:3},
+    {id:13,'name':'Étagère murale bois flotté', category:'Décoration', price:42000, stock:6},
+    {id:14,'name':'Ensemble salle de bain bambou', category:'Salle de bain', price:56000, stock:8},
+    {id:15,'name':'Paravent 4 panneaux rotin', category:'Salon', price:67500, stock:2},
+  ];
+
+  const statuses = ['pending','confirmed','shipped','delivered','delivered','delivered','cancelled'];
+  const orders = [];
+  for (let i = 1; i <= 48; i++) {
+    const date = new Date();
+    date.setDate(date.getDate() - Math.floor(Math.random() * 45));
+    const client = names[Math.floor(Math.random() * names.length)];
+    const prod = products[Math.floor(Math.random() * products.length)];
+    const qty = Math.floor(Math.random() * 3) + 1;
+    orders.push({
+      id: i,
+      ref: `ORZ-${String(i).padStart(4,'0')}`,
+      client_name: client,
+      client_email: client.toLowerCase().replace(/\s/,'.')+'@gmail.com',
+      date: date.toISOString(),
+      product_name: prod.name,
+      qty,
+      amount: prod.price * qty,
+      status: statuses[Math.floor(Math.random() * statuses.length)],
+      items: [{name: prod.name, qty, price: prod.price}],
+    });
+  }
+  orders.sort((a,b) => new Date(b.date) - new Date(a.date));
+
+  const clients = names.map((name, i) => {
+    const clientOrders = orders.filter(o => o.client_name === name);
+    return {
+      id: i+1,
+      name,
+      email: name.toLowerCase().replace(/\s/,'.')+'@gmail.com',
+      phone: '+262 639 '+String(Math.floor(Math.random()*899999+100000)).replace(/(\d{2})(\d{2})(\d{2})/,'$1 $2 $3'),
+      orders_count: clientOrders.length,
+      total_spent: clientOrders.filter(o=>o.status!=='cancelled').reduce((s,o)=>s+o.amount,0),
+      last_order: clientOrders.length ? clientOrders[0].date : null,
+    };
+  });
+
+  return { products, orders, clients };
+}
+
+/* ─────────── UTILS ─────────── */
+const fmtCurrency = (v) => {
+  if (v >= 1000000) return (v/1000000).toFixed(1).replace('.',',') + ' M Ar';
+  if (v >= 1000) return (v/1000).toFixed(0) + ' k Ar';
+  return v + ' Ar';
+};
+const fmtDate = (d) => d ? new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'short',year:'numeric'}) : '—';
+const fmtDateShort = (d) => d ? new Date(d).toLocaleDateString('fr-FR',{day:'2-digit',month:'2-digit'}) : '—';
+
+function toast(msg, type='success') {
+  const el = document.getElementById('toast');
+  el.textContent = msg;
+  el.className = `toast show ${type}`;
+  setTimeout(() => el.className = 'toast', 3000);
+}
+
+function showScreen(id) {
+  document.querySelectorAll('.screen').forEach(s => s.classList.remove('active'));
+  document.getElementById('screen-'+id).classList.add('active');
+}
+
+function showPage(pageId, navEl) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById(pageId).classList.add('active');
+  document.querySelectorAll('.nav-item').forEach(n => n.classList.remove('active'));
+  if (navEl) navEl.classList.add('active');
+  const titles = {
+    'page-ventes': 'Ventes & Chiffre d\'affaires',
+    'page-commandes': 'Commandes',
+    'page-produits': 'Produits & Stock',
+    'page-clients': 'Clients',
+  };
+  document.getElementById('topbar-title').textContent = titles[pageId] || '';
+}
+
+function openModal(id) { document.getElementById(id).classList.add('show'); }
+function closeModal(id) { document.getElementById(id).classList.remove('show'); }
+
+function refreshCurrentPage() {
+  const active = document.querySelector('.page.active');
+  if (!active) return;
+  const id = active.id;
+  if (id === 'page-ventes') loadVentes();
+  else if (id === 'page-commandes') loadCommandes();
+  else if (id === 'page-produits') loadProduits();
+  else if (id === 'page-clients') loadClients();
+  toast('Données actualisées', 'success');
+}
+
+/* ─────────── CONFIG ─────────── */
+function saveConfig() {
+  const url = document.getElementById('cfg-url').value.trim();
+  const key = document.getElementById('cfg-key').value.trim();
+  if (!url || !key) { toast('Veuillez remplir tous les champs', 'error'); return; }
+  localStorage.setItem('sb_url', url);
+  localStorage.setItem('sb_key', key);
+  initSupabase(url, key);
+  showScreen('login');
+}
+
+function initSupabase(url, key) {
+  try {
+    supabaseClient = window.supabase.createClient(url, key);
+  } catch(e) {
+    console.error('Supabase init error:', e);
+  }
+}
+
+/* ─────────── AUTH ─────────── */
+async function doLogin() {
+  const email = document.getElementById('login-email').value.trim();
+  const password = document.getElementById('login-password').value;
+  const errEl = document.getElementById('login-error');
+  errEl.classList.remove('show');
+
+  if (!supabaseClient) {
+    errEl.textContent = 'Supabase non configuré. Utilisez le mode démo ou configurez votre projet.';
+    errEl.classList.add('show');
+    return;
+  }
+
+  try {
+    const { data, error } = await supabaseClient.auth.signInWithPassword({ email, password });
+    if (error) throw error;
+    currentUser = data.user;
+    enterApp(email);
+  } catch(e) {
+    errEl.textContent = e.message || 'Erreur de connexion';
+    errEl.classList.add('show');
+  }
+}
+
+function demoLogin() {
+  isDemoMode = true;
+  currentUser = { email: 'demo@oryzon.deco' };
+  enterApp('demo@oryzon.deco');
+}
+
+function enterApp(email) {
+  document.getElementById('user-email').textContent = email;
+  document.getElementById('user-avatar').textContent = email[0].toUpperCase();
+  if (isDemoMode) document.getElementById('demo-banner').style.display = 'flex';
+  showScreen('app');
+  document.getElementById('topbar-date').textContent = new Date().toLocaleDateString('fr-FR',{weekday:'long',day:'numeric',month:'long',year:'numeric'});
+  loadAllData();
+}
+
+async function doLogout() {
+  if (supabaseClient && !isDemoMode) await supabaseClient.auth.signOut();
+  isDemoMode = false; currentUser = null;
+  showScreen('login');
+}
+
+/* ─────────── DATA LOADING ─────────── */
+let demoData = null;
+
+async function loadAllData() {
+  if (isDemoMode) {
+    demoData = generateDemoData();
+    allOrders   = demoData.orders;
+    allProducts = demoData.products;
+    allClients  = demoData.clients;
+  } else {
+    await Promise.all([fetchOrders(), fetchProducts(), fetchClients()]);
+  }
+  loadVentes();
+  loadCommandes();
+  loadProduits();
+  loadClients();
+  updatePendingBadge();
+}
+
+async function fetchOrders() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('orders')
+      .select('*, profiles(full_name,email), order_items(qty, price, products(name,category))')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    allOrders = (data || []).map(o => ({
+      id: o.id,
+      ref: `ORZ-${String(o.id).padStart(4,'0')}`,
+      client_name: o.profiles?.full_name || 'Inconnu',
+      client_email: o.profiles?.email || '',
+      date: o.created_at,
+      amount: o.total_amount || 0,
+      status: o.status || 'pending',
+      items: (o.order_items || []).map(i => ({
+        name: i.products?.name || '—',
+        qty: i.qty,
+        price: i.price,
+      })),
+    }));
+  } catch(e) { console.error('fetchOrders:', e); allOrders = []; }
+}
+
+async function fetchProducts() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('products')
+      .select('id, name, category:categories(name), price, stock_qty, is_active')
+      .order('name');
+    if (error) throw error;
+    allProducts = (data || []).map(p => ({
+      id: p.id,
+      name: p.name,
+      category: p.category?.name || 'Non catégorisé',
+      price: p.price || 0,
+      stock: p.stock_qty || 0,
+      active: p.is_active !== false,
+    }));
+  } catch(e) { console.error('fetchProducts:', e); allProducts = []; }
+}
+
+async function fetchClients() {
+  try {
+    const { data, error } = await supabaseClient
+      .from('profiles')
+      .select('id, full_name, email, phone, created_at')
+      .order('created_at', { ascending: false });
+    if (error) throw error;
+    // enrich with order totals
+    const { data: orders } = await supabaseClient
+      .from('orders')
+      .select('user_id, total_amount, created_at, status');
+    allClients = (data || []).map(p => {
+      const userOrders = (orders||[]).filter(o => o.user_id === p.id && o.status !== 'cancelled');
+      const lastOrder = userOrders.sort((a,b) => new Date(b.created_at)-new Date(a.created_at))[0];
+      return {
+        id: p.id,
+        name: p.full_name || 'Anonyme',
+        email: p.email || '',
+        phone: p.phone || '',
+        orders_count: userOrders.length,
+        total_spent: userOrders.reduce((s,o)=>s+(o.total_amount||0),0),
+        last_order: lastOrder?.created_at || null,
+        created_at: p.created_at,
+      };
+    });
+  } catch(e) { console.error('fetchClients:', e); allClients = []; }
+}
+
+/* ─────────── VENTES PAGE ─────────── */
+function loadVentes() {
+  const now = new Date();
+  const today = now.toISOString().split('T')[0];
+  const weekAgo = new Date(now); weekAgo.setDate(now.getDate()-7);
+  const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+
+  const completedOrders = allOrders.filter(o => o.status !== 'cancelled');
+
+  const caToday  = completedOrders.filter(o => o.date?.startsWith(today)).reduce((s,o)=>s+o.amount,0);
+  const caWeek   = completedOrders.filter(o => new Date(o.date) >= weekAgo).reduce((s,o)=>s+o.amount,0);
+  const caMonth  = completedOrders.filter(o => new Date(o.date) >= monthStart).reduce((s,o)=>s+o.amount,0);
+  const ordersM  = completedOrders.filter(o => new Date(o.date) >= monthStart).length;
+
+  document.getElementById('kpi-today').innerHTML = fmtCurrency(caToday);
+  document.getElementById('kpi-week').innerHTML  = fmtCurrency(caWeek);
+  document.getElementById('kpi-month').innerHTML = fmtCurrency(caMonth);
+  document.getElementById('kpi-orders').innerHTML = `${ordersM}<small> cmd</small>`;
+  document.getElementById('kpi-today-trend').textContent  = `${allOrders.filter(o=>o.date?.startsWith(today)).length} commande(s)`;
+  document.getElementById('kpi-week-trend').textContent   = `7 derniers jours`;
+  document.getElementById('kpi-month-trend').textContent  = `Mois de ${now.toLocaleDateString('fr-FR',{month:'long'})}`;
+  document.getElementById('kpi-orders-trend').textContent = `Mois en cours`;
+
+  buildChartCA();
+  buildChartTop();
+  buildChartCats();
+}
+
+function buildChartCA() {
+  const ctx = document.getElementById('chart-ca').getContext('2d');
+  if (charts.ca) charts.ca.destroy();
+
+  const days = 30;
+  const labels = [], data = [];
+  for (let i = days-1; i >= 0; i--) {
+    const d = new Date(); d.setDate(d.getDate()-i);
+    const key = d.toISOString().split('T')[0];
+    labels.push(fmtDateShort(d));
+    const dayCA = allOrders
+      .filter(o => o.status !== 'cancelled' && o.date?.startsWith(key))
+      .reduce((s,o)=>s+o.amount, 0);
+    data.push(dayCA/1000);
+  }
+
+  charts.ca = new Chart(ctx, {
+    type: 'line',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        borderColor: '#C4714A',
+        backgroundColor: 'rgba(196,113,74,.08)',
+        borderWidth: 2,
+        pointRadius: 2,
+        pointHoverRadius: 5,
+        fill: true,
+        tension: 0.4,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { display: false }, ticks: { font: { size: 9 }, maxTicksLimit: 10, color: '#9A9490' } },
+        y: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { font: { size: 9 }, color: '#9A9490', callback: v => v+'k' } },
+      },
+    },
+  });
+}
+
+function buildChartTop() {
+  const ctx = document.getElementById('chart-top').getContext('2d');
+  if (charts.top) charts.top.destroy();
+
+  const byProduct = {};
+  allOrders.filter(o=>o.status!=='cancelled').forEach(o => {
+    const name = o.items?.[0]?.name || o.product_name || 'Autre';
+    const short = name.length > 18 ? name.substring(0,16)+'…' : name;
+    byProduct[short] = (byProduct[short]||0) + o.amount;
+  });
+  const sorted = Object.entries(byProduct).sort((a,b)=>b[1]-a[1]).slice(0,6);
+
+  charts.top = new Chart(ctx, {
+    type: 'bar',
+    data: {
+      labels: sorted.map(([k])=>k),
+      datasets: [{
+        data: sorted.map(([,v])=>v/1000),
+        backgroundColor: ['#C4714A','#7A8C6E','#8A9BA8','#C9A898','#D4906E','#EBE4D6'],
+        borderRadius: 2,
+      }],
+    },
+    options: {
+      indexAxis: 'y',
+      responsive: true, maintainAspectRatio: false,
+      plugins: { legend: { display: false } },
+      scales: {
+        x: { grid: { color: 'rgba(0,0,0,.04)' }, ticks: { font:{size:9}, color:'#9A9490', callback: v=>v+'k' } },
+        y: { grid: { display: false }, ticks: { font:{size:9}, color:'#9A9490' } },
+      },
+    },
+  });
+}
+
+function buildChartCats() {
+  const ctx = document.getElementById('chart-cats').getContext('2d');
+  if (charts.cats) charts.cats.destroy();
+
+  const monthStart = new Date(); monthStart.setDate(1); monthStart.setHours(0,0,0,0);
+  const byCat = {};
+  allOrders.filter(o=>o.status!=='cancelled'&&new Date(o.date)>=monthStart).forEach(o => {
+    const cat = o.items?.[0]?.category || 'Autre';
+    byCat[cat] = (byCat[cat]||0) + o.amount;
+  });
+
+  const labels = Object.keys(byCat);
+  const data   = Object.values(byCat).map(v=>v/1000);
+
+  charts.cats = new Chart(ctx, {
+    type: 'doughnut',
+    data: {
+      labels,
+      datasets: [{
+        data,
+        backgroundColor: ['#C4714A','#7A8C6E','#8A9BA8','#C9A898','#D4906E','#2A2018'],
+        borderWidth: 0,
+      }],
+    },
+    options: {
+      responsive: true, maintainAspectRatio: false,
+      plugins: {
+        legend: { position:'right', labels: { font:{size:10}, color:'#1E1710', padding:12, boxWidth:10 } },
+      },
+    },
+  });
+}
+
+/* ─────────── COMMANDES PAGE ─────────── */
+function loadCommandes() {
+  filteredOrders = [...allOrders];
+  pages.orders = 1;
+  renderOrders();
+}
+
+function filterOrders() {
+  const q = document.getElementById('search-orders').value.toLowerCase();
+  const st = document.getElementById('filter-status').value;
+  filteredOrders = allOrders.filter(o => {
+    const matchQ = !q || o.ref.toLowerCase().includes(q) || o.client_name.toLowerCase().includes(q);
+    const matchSt = !st || o.status === st;
+    return matchQ && matchSt;
+  });
+  pages.orders = 1;
+  renderOrders();
+}
+
+function renderOrders() {
+  const tbody = document.getElementById('orders-tbody');
+  const start = (pages.orders-1)*PAGE_SIZE;
+  const slice = filteredOrders.slice(start, start+PAGE_SIZE);
+
+  if (!slice.length) {
+    tbody.innerHTML = `<tr><td colspan="7"><div class="empty-state"><h3>Aucune commande</h3><p>Modifiez vos filtres</p></div></td></tr>`;
+  } else {
+    tbody.innerHTML = slice.map(o => `
+      <tr>
+        <td><strong>${o.ref}</strong></td>
+        <td>${o.client_name}</td>
+        <td>${fmtDate(o.date)}</td>
+        <td>${o.items?.length || 1} article(s)</td>
+        <td class="col-num"><strong>${fmtCurrency(o.amount)}</strong></td>
+        <td>${statusBadge(o.status)}</td>
+        <td><button class="btn-sm outline" onclick="openOrder(${o.id})">Voir</button></td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('orders-count').textContent = `${filteredOrders.length} commande(s)`;
+  renderPagination('orders-pages', pages.orders, Math.ceil(filteredOrders.length/PAGE_SIZE), p => { pages.orders=p; renderOrders(); });
+}
+
+function statusBadge(status) {
+  const labels = { pending:'En attente', confirmed:'Confirmée', shipped:'Expédiée', delivered:'Livrée', cancelled:'Annulée' };
+  return `<span class="badge badge-${status}">${labels[status]||status}</span>`;
+}
+
+function openOrder(id) {
+  const order = allOrders.find(o=>o.id===id);
+  if (!order) return;
+  currentOrderId = id;
+  document.getElementById('modal-order-ref').textContent = order.ref;
+  document.getElementById('modal-order-content').innerHTML = `
+    <div class="modal-field">
+      <label>Client</label>
+      <div class="value">${order.client_name} — <em>${order.client_email}</em></div>
+    </div>
+    <div class="modal-field">
+      <label>Date</label>
+      <div class="value">${fmtDate(order.date)}</div>
+    </div>
+    <div class="modal-field">
+      <label>Articles</label>
+      <div class="order-items-list">
+        ${(order.items||[{name:order.product_name||'Produit', qty:1, price:order.amount}]).map(item=>`
+          <div class="order-item">
+            <div class="order-item-qty">${item.qty}</div>
+            <div class="order-item-name">${item.name}</div>
+            <div class="order-item-price">${fmtCurrency(item.price*item.qty)}</div>
+          </div>
+        `).join('')}
+      </div>
+    </div>
+    <div class="modal-field">
+      <label>Montant total</label>
+      <div class="value"><strong>${fmtCurrency(order.amount)}</strong></div>
+    </div>
+    <div class="modal-field">
+      <label>Changer le statut</label>
+      <select id="modal-status-select">
+        <option value="pending"   ${order.status==='pending'?'selected':''}>En attente</option>
+        <option value="confirmed" ${order.status==='confirmed'?'selected':''}>Confirmée</option>
+        <option value="shipped"   ${order.status==='shipped'?'selected':''}>Expédiée</option>
+        <option value="delivered" ${order.status==='delivered'?'selected':''}>Livrée</option>
+        <option value="cancelled" ${order.status==='cancelled'?'selected':''}>Annulée</option>
+      </select>
+    </div>
+  `;
+  openModal('modal-order');
+}
+
+async function saveOrderStatus() {
+  const newStatus = document.getElementById('modal-status-select').value;
+  const order = allOrders.find(o=>o.id===currentOrderId);
+  if (!order) return;
+
+  if (!isDemoMode && supabaseClient) {
+    const { error } = await supabaseClient.from('orders').update({status: newStatus}).eq('id', currentOrderId);
+    if (error) { toast('Erreur mise à jour: '+error.message, 'error'); return; }
+  }
+  order.status = newStatus;
+  closeModal('modal-order');
+  renderOrders();
+  updatePendingBadge();
+  toast('Statut mis à jour ✓');
+}
+
+function updatePendingBadge() {
+  const count = allOrders.filter(o=>o.status==='pending').length;
+  const badge = document.getElementById('badge-commandes');
+  badge.textContent = count;
+  badge.style.display = count ? '' : 'none';
+}
+
+/* ─────────── PRODUITS PAGE ─────────── */
+function loadProduits() {
+  filteredProducts = [...allProducts];
+  pages.products = 1;
+
+  document.getElementById('prod-total').textContent   = allProducts.length;
+  document.getElementById('prod-instock').textContent = allProducts.filter(p=>p.stock>5).length;
+  document.getElementById('prod-low').textContent     = allProducts.filter(p=>p.stock>0&&p.stock<=5).length;
+  document.getElementById('prod-out').textContent     = allProducts.filter(p=>p.stock===0).length;
+
+  renderProducts();
+}
+
+function filterProducts() {
+  const q = document.getElementById('search-products').value.toLowerCase();
+  const cat = document.getElementById('filter-cat').value;
+  filteredProducts = allProducts.filter(p => {
+    const matchQ = !q || p.name.toLowerCase().includes(q) || p.category.toLowerCase().includes(q);
+    const matchC = !cat || p.category === cat;
+    return matchQ && matchC;
+  });
+  pages.products = 1;
+  renderProducts();
+}
+
+function renderProducts() {
+  const tbody = document.getElementById('products-tbody');
+  const start = (pages.products-1)*PAGE_SIZE;
+  const slice = filteredProducts.slice(start, start+PAGE_SIZE);
+
+  if (!slice.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><h3>Aucun produit</h3></div></td></tr>`;
+  } else {
+    tbody.innerHTML = slice.map(p => {
+      const stockLevel = p.stock === 0 ? 'low' : p.stock <= 5 ? 'mid' : 'ok';
+      const barWidth = Math.min(100, (p.stock/20)*100);
+      return `
+        <tr>
+          <td>
+            <div style="display:flex;align-items:center;gap:.6rem">
+              <div class="product-img-thumb">🛋</div>
+              <strong>${p.name}</strong>
+            </div>
+          </td>
+          <td>${p.category}</td>
+          <td class="col-num">${fmtCurrency(p.price)}</td>
+          <td class="col-num"><strong>${p.stock}</strong></td>
+          <td>
+            <div class="stock-bar-wrap">
+              <div class="stock-bar ${stockLevel}" style="width:${barWidth}%"></div>
+            </div>
+          </td>
+          <td>${p.stock===0?'<span class="badge badge-low">Rupture</span>':p.stock<=5?'<span class="badge badge-pending">Stock faible</span>':'<span class="badge badge-ok">En stock</span>'}</td>
+        </tr>
+      `;
+    }).join('');
+  }
+
+  document.getElementById('products-count').textContent = `${filteredProducts.length} produit(s)`;
+  renderPagination('products-pages', pages.products, Math.ceil(filteredProducts.length/PAGE_SIZE), p => { pages.products=p; renderProducts(); });
+}
+
+/* ─────────── CLIENTS PAGE ─────────── */
+function loadClients() {
+  filteredClients = [...allClients];
+  pages.clients = 1;
+
+  document.getElementById('cli-total').textContent = allClients.length;
+  const now = new Date(); const monthStart = new Date(now.getFullYear(), now.getMonth(), 1);
+  const newCount = allClients.filter(c => c.created_at && new Date(c.created_at) >= monthStart).length;
+  document.getElementById('cli-new').textContent = newCount;
+  const avgSpend = allClients.length ? Math.round(allClients.reduce((s,c)=>s+c.total_spent,0)/allClients.filter(c=>c.total_spent>0).length||0) : 0;
+  document.getElementById('cli-avg').innerHTML = fmtCurrency(avgSpend);
+
+  renderClients();
+}
+
+function filterClients() {
+  const q = document.getElementById('search-clients').value.toLowerCase();
+  const sort = document.getElementById('filter-client-sort').value;
+  filteredClients = allClients.filter(c => {
+    return !q || c.name.toLowerCase().includes(q) || c.email.toLowerCase().includes(q);
+  });
+  if (sort === 'total_spent') filteredClients.sort((a,b)=>b.total_spent-a.total_spent);
+  else if (sort === 'name') filteredClients.sort((a,b)=>a.name.localeCompare(b.name));
+  else filteredClients.sort((a,b)=>new Date(b.last_order||0)-new Date(a.last_order||0));
+  pages.clients = 1;
+  renderClients();
+}
+
+function renderClients() {
+  const tbody = document.getElementById('clients-tbody');
+  const start = (pages.clients-1)*PAGE_SIZE;
+  const slice = filteredClients.slice(start, start+PAGE_SIZE);
+
+  if (!slice.length) {
+    tbody.innerHTML = `<tr><td colspan="6"><div class="empty-state"><h3>Aucun client</h3></div></td></tr>`;
+  } else {
+    tbody.innerHTML = slice.map(c => `
+      <tr>
+        <td>
+          <div style="display:flex;align-items:center;gap:.6rem">
+            <div style="width:28px;height:28px;border-radius:50%;background:var(--blush);display:flex;align-items:center;justify-content:center;font-size:.7rem;font-weight:600;color:var(--dark);flex-shrink:0">
+              ${c.name[0].toUpperCase()}
+            </div>
+            <strong>${c.name}</strong>
+          </div>
+        </td>
+        <td style="color:var(--gray)">${c.email}</td>
+        <td style="color:var(--gray)">${c.phone||'—'}</td>
+        <td class="col-num">${c.orders_count}</td>
+        <td class="col-num"><strong>${fmtCurrency(c.total_spent)}</strong></td>
+        <td>${fmtDate(c.last_order)}</td>
+      </tr>
+    `).join('');
+  }
+
+  document.getElementById('clients-count').textContent = `${filteredClients.length} client(s)`;
+  renderPagination('clients-pages', pages.clients, Math.ceil(filteredClients.length/PAGE_SIZE), p => { pages.clients=p; renderClients(); });
+}
+
+/* ─────────── PAGINATION ─────────── */
+function renderPagination(containerId, current, total, onChange) {
+  const el = document.getElementById(containerId);
+  if (total <= 1) { el.innerHTML = ''; return; }
+  let html = `<button class="pg-btn" onclick="(${onChange.toString()})(${current-1})" ${current<=1?'disabled':''}>‹</button>`;
+  for (let i = 1; i <= total; i++) {
+    if (i === 1 || i === total || Math.abs(i-current) <= 1) {
+      html += `<button class="pg-btn ${i===current?'active':''}" onclick="(${onChange.toString()})(${i})">${i}</button>`;
+    } else if (Math.abs(i-current) === 2) {
+      html += `<button class="pg-btn" disabled>…</button>`;
+    }
+  }
+  html += `<button class="pg-btn" onclick="(${onChange.toString()})(${current+1})" ${current>=total?'disabled':''}>›</button>`;
+  el.innerHTML = html;
+}
+
+/* ─────────── INIT ─────────── */
+(function init() {
+  const savedUrl = localStorage.getItem('sb_url');
+  const savedKey = localStorage.getItem('sb_key');
+
+  if (savedUrl && savedKey) {
+    initSupabase(savedUrl, savedKey);
+    document.getElementById('cfg-url').value = savedUrl;
+    document.getElementById('cfg-key').value = savedKey;
+
+    // check existing session
+    supabaseClient.auth.getSession().then(({ data: { session } }) => {
+      if (session) {
+        currentUser = session.user;
+        enterApp(session.user.email);
+      } else {
+        showScreen('login');
+      }
+    });
+  } else {
+    showScreen('config');
+  }
+})();
+</script>
+</body>
+</html>

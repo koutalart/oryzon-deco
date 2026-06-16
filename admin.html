@@ -1798,9 +1798,12 @@ function renderPagination(containerId, current, total, onChange) {
 }
 
 /* ─────────── INIT ─────────── */
+const DEFAULT_SB_URL = 'https://oyujjjtgpsgtyruqepzc.supabase.co';
+const DEFAULT_SB_KEY = 'eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6Im95dWpqanRncHNndHlydXFlcHpjIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODE2MjkwNTQsImV4cCI6MjA5NzIwNTA1NH0.V25zcHxsTXcXveO8lzRdsYFsX9X-2rApek1dxtLYFFc';
+
 (function init() {
-  const savedUrl = localStorage.getItem('sb_url');
-  const savedKey = localStorage.getItem('sb_key');
+  const savedUrl = localStorage.getItem('sb_url') || DEFAULT_SB_URL;
+  const savedKey = localStorage.getItem('sb_key') || DEFAULT_SB_KEY;
 
   if (savedUrl && savedKey) {
     initSupabase(savedUrl, savedKey);
@@ -1813,6 +1816,7 @@ function renderPagination(containerId, current, total, onChange) {
         currentUser = session.user;
         enterApp(session.user.email);
       } else {
+        // Supabase configuré → aller direct au login
         showScreen('login');
       }
     });
